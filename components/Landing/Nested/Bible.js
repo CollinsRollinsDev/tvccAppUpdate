@@ -31,6 +31,7 @@ const Bible = ({}) => {
   const {currentBook, currentChapter, currentVerse, currentScripture} = useSelector(state => state.useTheReducer)
   // const state = useSelector(state => state.state)
   const dispatch = useDispatch()
+
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 }, [])
@@ -48,7 +49,7 @@ const Bible = ({}) => {
     // const oldTestament = scriptures[0].books[0].oldTestament;
 
     const filterBookPicked = async(e) => {
-      await dispatch(setCurrentBook(e = e))
+      
       const bibleArr = await Object.entries(oldTestament);
       const filteredArr = await bibleArr.filter(function([key, value]){
         return key === e;
@@ -60,11 +61,6 @@ const Bible = ({}) => {
       // console.log(newObj)
 
    }
-   console.log("from redux: book",currentBook)
-   console.log("from redux: chapter",currentChapter)
-   console.log("from redux: verse",currentVerse)
-   console.log("from redux: scripture",currentScripture)
-
 
     useEffect(() => {
     filterBookPicked(selectedBook);
@@ -73,7 +69,6 @@ const Bible = ({}) => {
 
     const getVerses = async(e) => {
       await e;
-      dispatch(setCurrentVerse(e))
       // await e.toString();
         const toFilter = await userPickedOld;
        const filtered = await toFilter.filter((each) => each.chapter == e)
@@ -90,22 +85,29 @@ const Bible = ({}) => {
 
     const handleChapterPress = async(e) => {
       setSelectedChapter(parseInt(e))
-      await setSelectedChapter(selectedChapter = e)
-      console.log(selectedChapter)
-      dispatch(setCurrentChapter(e))
+      setSelectedChapter(selectedChapter = e)
+      // console.log(selectedChapter)
       setDisplayChapters(false)
     }
 
     const handleVersePress = async(e) => {
       // console.log(e);
       await setVerseSelected(verseSelected = e)
-      console.log(verseSelected)
+      // console.log(verseSelected)
     }
 
     useEffect(() => {
       console.log("Moving to readable page")
+      dispatch(setCurrentBook(selectedBook))
+      dispatch(setCurrentChapter(selectedChapter));
+      dispatch(setCurrentVerse(verseSelected))
+      dispatch(setCurrentScripture(verseArr))
     }, [verseSelected])
 
+    console.log("book",currentBook)
+    console.log("chapter", currentChapter)
+    console.log("verse", currentVerse)
+    console.log("scripture", currentScripture)
 
     return (
         <View style={styles.body}>
