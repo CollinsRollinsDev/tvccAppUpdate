@@ -15,12 +15,12 @@ import HomePage from "./components/Landing/HomePage.js";
 import About from "./components/Landing/Nested/About.js";
 import Bible from "./components/Landing/Nested/Bible.js";
 import ReadPage from "./components/ReadBiblePage/ReadPage.js";
-import store from "./redux_store/store.js";
 import { Provider } from "react-redux";
+import { Store } from "./reduxStore/store.js";
 
 export default function App() {
   return (
-    <Provider store={store}>
+    <Provider store={Store}>
       <View style={styles.main}>
         {/* <Lunch /> */}
         {/* <Login /> */}

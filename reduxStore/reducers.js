@@ -1,10 +1,10 @@
 import { SET_CURRENT_BOOK, SET_CURRENT_CHAPTER, SET_CURRENT_VERSE, SET_CURRENT_SCRIPTURE } from './actions';
 
 const initialState = {
-    currentBook = '',
-    currentChapter = '',
-    currentVerse = '',
-    currentScripture = [],
+    currentBook : '',
+    currentChapter : '',
+    currentVerse : '',
+    currentScripture : [],
 }
 
 function useTheReducer(state = initialState, action){
