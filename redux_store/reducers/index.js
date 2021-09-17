@@ -10,5 +10,4 @@ export default combineReducers({
     currentChapterReducer: currentChapterReducer,
     currentScriptReducer: currentScriptReducer,
     currentVerseReducer: currentVerseReducer
-
 })
