@@ -33,7 +33,7 @@ const Bible = ({}) => {
 
     // console.log(scriptures);
     const [search, updateSearch] = useState('');
-    const [selectedBook, setSelectedBook] = useState("Ruth");
+    const [selectedBook, setSelectedBook] = useState("Genesis");
     const [userPickedOld, setUserPickedOld] = useState();
     let   [selectedChapter, setSelectedChapter] = useState()
     const [displayChapters, setDisplayChapters] = useState(true);
