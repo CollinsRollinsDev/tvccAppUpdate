@@ -4,6 +4,8 @@ import Header from "../../Header/Header";
 // import { SearchBar } from 'react-native-elements';
 import {Picker} from '@react-native-picker/picker';
 import scriptures from '../../../assets/bibleKJV.json';
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentBook, setCurrentChapter, setCurrentVerse, setCurrentScripture } from "../../../reduxStore/actions";
 
 import {
   StyleSheet,
@@ -26,7 +28,9 @@ const updateSearch = () => {
 }
 
 const Bible = ({}) => {
-
+  const {currentBook, currentChapter, currentVerse, currentScripture} = useSelector(state => state.useTheReducer)
+  // const state = useSelector(state => state.state)
+  const dispatch = useDispatch()
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 }, [])
@@ -44,7 +48,7 @@ const Bible = ({}) => {
     // const oldTestament = scriptures[0].books[0].oldTestament;
 
     const filterBookPicked = async(e) => {
-      
+      await dispatch(setCurrentBook(e = e))
       const bibleArr = await Object.entries(oldTestament);
       const filteredArr = await bibleArr.filter(function([key, value]){
         return key === e;
@@ -56,6 +60,11 @@ const Bible = ({}) => {
       // console.log(newObj)
 
    }
+   console.log("from redux: book",currentBook)
+   console.log("from redux: chapter",currentChapter)
+   console.log("from redux: verse",currentVerse)
+   console.log("from redux: scripture",currentScripture)
+
 
     useEffect(() => {
     filterBookPicked(selectedBook);
@@ -64,6 +73,7 @@ const Bible = ({}) => {
 
     const getVerses = async(e) => {
       await e;
+      dispatch(setCurrentVerse(e))
       // await e.toString();
         const toFilter = await userPickedOld;
        const filtered = await toFilter.filter((each) => each.chapter == e)
@@ -80,8 +90,9 @@ const Bible = ({}) => {
 
     const handleChapterPress = async(e) => {
       setSelectedChapter(parseInt(e))
-      setSelectedChapter(selectedChapter = e)
+      await setSelectedChapter(selectedChapter = e)
       console.log(selectedChapter)
+      dispatch(setCurrentChapter(e))
       setDisplayChapters(false)
     }
 

@@ -26,8 +26,8 @@ export default function App() {
         {/* <Login /> */}
         {/* <HomePage /> */}
         {/* <About /> */}
-        {/* <Bible /> */}
-        <ReadPage />
+        <Bible />
+        {/* <ReadPage /> */}
       </View>
     </Provider>
   );
