@@ -1,12 +1,14 @@
-  
-import {combineReducers} from 'redux'
-import { sideMenuReducer } from './sideMenuReducer';
-import { openChatReducer } from './openChatReducer';
-import { closeChatReducer } from './closeChatReducer';
+
+import { currentBookReducer } from './currentBookReducer';
+import { currentChapterReducer } from './currentChapterReducer';
+import { currentVerseReducer } from './currentVerseReducer';
+import { currentScriptReducer } from './currentScriptReducer';
+
 
 export default combineReducers({
-    menu: sideMenuReducer,
-    closeChatReducer : closeChatReducer,
-    openChatReducer: openChatReducer
+    currentBookReducer: currentBookReducer,
+    currentChapterReducer: currentChapterReducer,
+    currentScriptReducer: currentScriptReducer,
+    currentVerseReducer: currentVerseReducer
 
 })
