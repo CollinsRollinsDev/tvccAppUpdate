@@ -38,7 +38,7 @@ const Bible = ({}) => {
 
     // console.log(scriptures);
     const [search, updateSearch] = useState('');
-    const [selectedBook, setSelectedBook] = useState("Genesis");
+    let [selectedBook, setSelectedBook] = useState("Genesis");
     const [userPickedOld, setUserPickedOld] = useState();
     let   [selectedChapter, setSelectedChapter] = useState()
     const [displayChapters, setDisplayChapters] = useState(true);
@@ -49,7 +49,9 @@ const Bible = ({}) => {
     // const oldTestament = scriptures[0].books[0].oldTestament;
 
     const filterBookPicked = async(e) => {
-      
+      // console.log(e)
+      // setSelectedBook(e)
+      await dispatch(setCurrentBook(e))
       const bibleArr = await Object.entries(oldTestament);
       const filteredArr = await bibleArr.filter(function([key, value]){
         return key === e;
@@ -96,18 +98,22 @@ const Bible = ({}) => {
       // console.log(verseSelected)
     }
 
+    async function dispatchItems(){
+      
+      await dispatch(setCurrentChapter(selectedChapter));
+      await dispatch(setCurrentVerse(verseSelected))
+      await dispatch(setCurrentScripture(verseArr))
+    }
+
     useEffect(() => {
       console.log("Moving to readable page")
-      dispatch(setCurrentBook(selectedBook))
-      dispatch(setCurrentChapter(selectedChapter));
-      dispatch(setCurrentVerse(verseSelected))
-      dispatch(setCurrentScripture(verseArr))
+      dispatchItems()
     }, [verseSelected])
 
     console.log("book",currentBook)
-    console.log("chapter", currentChapter)
-    console.log("verse", currentVerse)
-    console.log("scripture", currentScripture)
+    // console.log("chapter", currentChapter)
+    // console.log("verse", currentVerse)
+    // console.log("scripture", currentScripture)
 
     return (
         <View style={styles.body}>
