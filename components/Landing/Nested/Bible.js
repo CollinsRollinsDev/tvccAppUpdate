@@ -110,7 +110,7 @@ const Bible = ({}) => {
       dispatchItems()
     }, [verseSelected])
 
-    console.log("book",currentBook)
+    // console.log("book",currentBook)
     // console.log("chapter", currentChapter)
     // console.log("verse", currentVerse)
     // console.log("scripture", currentScripture)
