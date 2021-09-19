@@ -38,22 +38,13 @@ const ReadPage = () => {
 
   return (
     <View style={styles.body}>
-      <Header name="Genesis" leftSide="Search" />
+      <Header name={currentBook && currentChapter ? `${currentBook} chapter ${currentChapter}` : "Loading..."} leftSide="Search" />
       <ScrollView>
-        {/* <View style={styles.scripture}>
-          <View style={styles.eachChapter}>
-            <Text style={styles.verseText}>
-              <Text style={styles.verseCount}> 1.</Text> And Cain talked with
-              Abel his brother: and it came to pass, when they were in the
-              field, that Cain rose up against Abel his brother, and slew him.
-            </Text>
-          </View>
-        </View> */}
 
         <FlatList
           // contentContainerStyle={styles.grid}
           // numColumns={4}
-          data={currentScripture[0].verses}
+          data={currentScripture ? currentScripture[0].verses : null}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             // console.log(item.verse)
@@ -80,6 +71,7 @@ const styles = StyleSheet.create({
   body: {
     minHeight: "100%",
     width: "100%",
+    marginBottom: 50,
   },
   scripture: {
     width: "100%",
