@@ -19,8 +19,12 @@ import {
   SafeAreaView,
   LogBox,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentBook, setCurrentChapter, setCurrentVerse, setCurrentScripture } from "../../reduxStore/actions";
 
 const ReadPage = () => {
+  const {currentBook, currentChapter, currentVerse, currentScripture} = useSelector(state => state.useTheReducer)
+  
   return (
     <View style={styles.body}>
       <Header name="Genesis" leftSide="Search" />
