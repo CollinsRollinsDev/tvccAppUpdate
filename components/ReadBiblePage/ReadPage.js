@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   scripture: {
     width: "100%",
     color: "black",
-    marginBottom: 80,
+    marginBottom: 5,
   },
   eachChapter: {
     width: "100%",
