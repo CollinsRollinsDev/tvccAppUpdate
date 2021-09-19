@@ -10,8 +10,14 @@ import {
   Image,
 } from "react-native";
 import Menus from './Menus'
+import About from '../Landing/Nested/About'
 
-const HomePage = () => {
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+
+const Stack = createNativeStackNavigator();
+
+const HomePage = ({navigation}) => {
     return (
         <View style={styles.body}>
             <View style={styles.upperContainer}>
@@ -32,7 +38,8 @@ const HomePage = () => {
                   source={require('../../assets/logo.png')}
                 />              
             </View>
-            <Menus />
+            
+          <Menus navigation={navigation} />
         </View>
     )
 }

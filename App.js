@@ -17,6 +17,7 @@ import Bible from "./components/Landing/Nested/Bible.js";
 import ReadPage from "./components/ReadBiblePage/ReadPage.js";
 import { Provider } from "react-redux";
 import { Store } from "./reduxStore/store.js";
+import Index from './components/Landing/Index';
 
 export default function App() {
   return (
@@ -24,10 +25,11 @@ export default function App() {
       <View style={styles.main}>
         {/* <Lunch /> */}
         {/* <Login /> */}
-        <HomePage />
+        {/* <HomePage /> */}
         {/* <About /> */}
         {/* <Bible /> */}
         {/* <ReadPage /> */}
+        <Index />
       </View>
     </Provider>
   );

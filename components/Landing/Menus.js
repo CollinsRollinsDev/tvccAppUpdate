@@ -11,68 +11,62 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import { NavigationContainer } from "@react-navigation/native";
 import Bible from "./Nested/Bible";
 import ReadPage from '../ReadBiblePage/ReadPage'
 
 
-const Stack = createNativeStackNavigator();
+// const Stack = createNativeStackNavigator();
 
 
-const Menus = () => {
+const Menus = ({navigation}) => {
 
     return (
 
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="Bible" component={ReadPage} />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <ScrollView>
+        <View style={styles.bodyMenus}>
+            <TouchableOpacity onPress={() => navigation.push("About")} style={styles.menu}>
+                <Text style={styles.content}>About</Text>
+            </TouchableOpacity>
 
-        // <ScrollView>
-        // <View style={styles.bodyMenus}>
-        //     <TouchableOpacity style={styles.menu}>
-        //         <Text style={styles.content}>About</Text>
-        //     </TouchableOpacity>
+            <TouchableOpacity style={styles.menu}>
+                <Text style={styles.content}>Location</Text>
+            </TouchableOpacity>
 
-        //     <TouchableOpacity style={styles.menu}>
-        //         <Text style={styles.content}>Location</Text>
-        //     </TouchableOpacity>
+            <TouchableOpacity style={styles.menu}>
+                <Text style={styles.content}>Word Bliss</Text>
+            </TouchableOpacity>
 
-        //     <TouchableOpacity style={styles.menu}>
-        //         <Text style={styles.content}>Word Bliss</Text>
-        //     </TouchableOpacity>
+            <TouchableOpacity style={styles.menu}>
+                <Text style={styles.content}>Notes</Text>
+            </TouchableOpacity>
 
-        //     <TouchableOpacity style={styles.menu}>
-        //         <Text style={styles.content}>Notes</Text>
-        //     </TouchableOpacity>
+            <TouchableOpacity style={styles.menu}>
+                <Text style={styles.content}>Bible</Text>
+            </TouchableOpacity>
 
-        //     <TouchableOpacity style={styles.menu}>
-        //         <Text style={styles.content}>Bible</Text>
-        //     </TouchableOpacity>
+            <TouchableOpacity style={styles.menu}>
+                <Text style={styles.content}>Sermon/Word of God</Text>
+            </TouchableOpacity>
 
-        //     <TouchableOpacity style={styles.menu}>
-        //         <Text style={styles.content}>Sermon/Word of God</Text>
-        //     </TouchableOpacity>
+            <TouchableOpacity style={styles.menu}>
+                <Text style={styles.content}>Events</Text>
+            </TouchableOpacity>
 
-        //     <TouchableOpacity style={styles.menu}>
-        //         <Text style={styles.content}>Events</Text>
-        //     </TouchableOpacity>
+            <TouchableOpacity style={styles.menu}>
+                <Text style={styles.content}>Login</Text>
+            </TouchableOpacity>
 
-        //     <TouchableOpacity style={styles.menu}>
-        //         <Text style={styles.content}>Login</Text>
-        //     </TouchableOpacity>
+            <TouchableOpacity style={styles.menu}>
+                <Text style={styles.content}>Sign Up</Text>
+            </TouchableOpacity>
 
-        //     <TouchableOpacity style={styles.menu}>
-        //         <Text style={styles.content}>Sign Up</Text>
-        //     </TouchableOpacity>
-
-        //     <TouchableOpacity style={styles.menu}>
-        //         <Text style={styles.content}>Settings/Profile</Text>
-        //     </TouchableOpacity>
-        // </View>
-        // </ScrollView>
+            <TouchableOpacity style={styles.menu}>
+                <Text style={styles.content}>Settings/Profile</Text>
+            </TouchableOpacity>
+        </View>
+        </ScrollView>
     )
 }
 
