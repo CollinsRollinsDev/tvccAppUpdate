@@ -27,7 +27,7 @@ const updateSearch = () => {
 
 }
 
-const Bible = ({}) => {
+const Bible = ({navigation}) => {
   const {currentBook, currentChapter, currentVerse, currentScripture} = useSelector(state => state.useTheReducer)
   // const state = useSelector(state => state.state)
   const dispatch = useDispatch()
@@ -90,6 +90,7 @@ const Bible = ({}) => {
       setSelectedChapter(selectedChapter = e)
       // console.log(selectedChapter)
       setDisplayChapters(false)
+      
     }
 
     const handleVersePress = async(e) => {
@@ -108,6 +109,7 @@ const Bible = ({}) => {
     useEffect(() => {
       console.log("Moving to readable page")
       dispatchItems()
+      // navigation.push("ReadPage") 
     }, [verseSelected])
 
     // console.log("book",currentBook)
@@ -212,7 +214,7 @@ const Bible = ({}) => {
                 </View>
 
                 {
-                  !displayChapters ? <Text style={styles.verseDecleartion}>Verses</Text> : null
+                  !displayChapters ? <Text  style={styles.verseDecleartion}>Verses</Text> : null
                 }
                 <View style={styles.verseArea}>
                 
@@ -225,7 +227,7 @@ const Bible = ({}) => {
                      keyExtractor={(item, index) => index.toString()}
                      renderItem={({ item }) => (
                     //  console.log(item.verse)
-                     <TouchableOpacity onPress={() => handleVersePress(item.verse)} style={styles.individualVerses}>
+                     <TouchableOpacity onPress={() => {handleVersePress(item.verse); navigation.push("ReadPage") }} style={styles.individualVerses}>
                          <Text style={styles.numbers}>{item.verse}</Text>
                      </TouchableOpacity>
                      )

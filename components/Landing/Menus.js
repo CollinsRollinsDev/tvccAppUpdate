@@ -42,7 +42,7 @@ const Menus = ({navigation}) => {
                 <Text style={styles.content}>Notes</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menu}>
+            <TouchableOpacity onPress={() => navigation.push("Bible")}  style={styles.menu}>
                 <Text style={styles.content}>Bible</Text>
             </TouchableOpacity>
 
