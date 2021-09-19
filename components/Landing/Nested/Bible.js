@@ -76,7 +76,7 @@ const Bible = ({navigation}) => {
        const filtered = await toFilter.filter((each) => each.chapter == e)
       await setVerseArr(verseArr = filtered);
       //  console.log(e)
-       console.log(verseArr[0].verses)
+      //  console.log(verseArr[0].verses)
 
     }
 
@@ -107,7 +107,7 @@ const Bible = ({navigation}) => {
     }
 
     useEffect(() => {
-      console.log("Moving to readable page")
+      // console.log("Moving to readable page")
       dispatchItems()
       // navigation.push("ReadPage") 
     }, [verseSelected])

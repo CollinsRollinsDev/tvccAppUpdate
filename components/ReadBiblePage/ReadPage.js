@@ -20,25 +20,54 @@ import {
   LogBox,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentBook, setCurrentChapter, setCurrentVerse, setCurrentScripture } from "../../reduxStore/actions";
+import {
+  setCurrentBook,
+  setCurrentChapter,
+  setCurrentVerse,
+  setCurrentScripture,
+} from "../../reduxStore/actions";
 
 const ReadPage = () => {
-  const {currentBook, currentChapter, currentVerse, currentScripture} = useSelector(state => state.useTheReducer)
-  
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
+
+  const { currentBook, currentChapter, currentVerse, currentScripture } =
+    useSelector((state) => state.useTheReducer);
+  console.log(currentScripture);
   return (
     <View style={styles.body}>
       <Header name="Genesis" leftSide="Search" />
       <ScrollView>
-        <View style={styles.scripture}>
+        {/* <View style={styles.scripture}>
           <View style={styles.eachChapter}>
             <Text style={styles.verseText}>
-               <Text style={styles.verseCount}>  1.</Text> And Cain talked with Abel his brother: and it came to pass, when
-              they were in the field, that Cain rose up against Abel his
-              brother, and slew him.
+              <Text style={styles.verseCount}> 1.</Text> And Cain talked with
+              Abel his brother: and it came to pass, when they were in the
+              field, that Cain rose up against Abel his brother, and slew him.
             </Text>
           </View>
+        </View> */}
 
-        </View>
+        <FlatList
+          // contentContainerStyle={styles.grid}
+          // numColumns={4}
+          data={currentScripture}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            console.log(item.verses[0].text)
+            // <TouchableOpacity onPress={() => handleChapterPress(item.chapter)}>
+            //   <View style={styles.scripture}>
+            //     <View style={styles.eachChapter}>
+            //       <Text style={styles.verseText}>
+            //         <Text style={styles.verseCount}> {item.verse}.</Text>{" "}
+            //         {item.text}
+            //       </Text>
+            //     </View>
+            //   </View>
+            // </TouchableOpacity>
+          )}
+        />
       </ScrollView>
     </View>
   );
@@ -61,11 +90,11 @@ const styles = StyleSheet.create({
     padding: "2%",
   },
   verseText: {
-      fontSize: 18,
-      width: '100%'
+    fontSize: 18,
+    width: "100%",
   },
-  verseCount:{
-      color: '#c42e04',
-      fontWeight: 'bold',
-  }
+  verseCount: {
+    color: "#c42e04",
+    fontWeight: "bold",
+  },
 });
