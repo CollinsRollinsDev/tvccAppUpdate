@@ -34,7 +34,8 @@ const ReadPage = () => {
 
   const { currentBook, currentChapter, currentVerse, currentScripture } =
     useSelector((state) => state.useTheReducer);
-  console.log(currentScripture);
+  // console.log(currentScripture[0].verses);
+
   return (
     <View style={styles.body}>
       <Header name="Genesis" leftSide="Search" />
@@ -52,20 +53,20 @@ const ReadPage = () => {
         <FlatList
           // contentContainerStyle={styles.grid}
           // numColumns={4}
-          data={currentScripture}
+          data={currentScripture[0].verses}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            console.log(item.verses[0].text)
-            // <TouchableOpacity onPress={() => handleChapterPress(item.chapter)}>
-            //   <View style={styles.scripture}>
-            //     <View style={styles.eachChapter}>
-            //       <Text style={styles.verseText}>
-            //         <Text style={styles.verseCount}> {item.verse}.</Text>{" "}
-            //         {item.text}
-            //       </Text>
-            //     </View>
-            //   </View>
-            // </TouchableOpacity>
+            // console.log(item.verse)
+            <TouchableOpacity onPress={() => handleChapterPress(item.chapter)}>
+              <View style={styles.scripture}>
+                <View style={styles.eachChapter}>
+                  <Text style={styles.verseText}>
+                    <Text style={styles.verseCount}> {item.verse}.</Text>{" "}
+                    {item.text}
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
           )}
         />
       </ScrollView>
