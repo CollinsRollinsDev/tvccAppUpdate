@@ -24,9 +24,9 @@ export default function App() {
       <View style={styles.main}>
         {/* <Lunch /> */}
         {/* <Login /> */}
-        {/* <HomePage /> */}
+        <HomePage />
         {/* <About /> */}
-        <Bible />
+        {/* <Bible /> */}
         {/* <ReadPage /> */}
       </View>
     </Provider>
