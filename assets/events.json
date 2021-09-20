@@ -1,0 +1,41 @@
+[
+{
+    "type": "Program",
+    "name": "Too Hot To Be Hurt",
+    "Time": "5:30pm",
+    "Date": "12th March, 2021",
+    "Host": "Pst Jude Eke",
+    "Guest": [
+        "Pst Cyril Levi",
+        "Pst Evans Smith"
+    ],
+    "Status": "Active",
+    "Description": "A Night To Remember!"
+},
+
+{
+    "type": "Weekly Activity",
+    "name": "Sunday Worship Service",
+    "Time": "9am",
+    "Date": "17th February, 2021",
+    "Host": "Pst Jude Eke",
+    "Guest": [
+       
+    ],
+    "Status": "Active",
+    "Description": "Worship Service"
+},
+
+{
+    "type": "Program",
+    "name": "Youth Day: Blissful Age",
+    "Time": "11am",
+    "Date": "13th May, 2021",
+    "Host": "Pst Jude Eke",
+    "Guest": [
+       
+    ],
+    "Status": "Active",
+    "Description": "Alive for christ!"
+}
+]
