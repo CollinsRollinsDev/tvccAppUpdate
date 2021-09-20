@@ -365,24 +365,26 @@ const styles = StyleSheet.create({
   },
   chapterArea: {
       // backgroundColor: 'red',
-    minHeight: 350,
+    minHeight: 50,
     width: "100%",
     marginBottom: 10,
     // marginTop: -150,
     padding: "2%",
     flexDirection: "row",
+    paddingBottom: 110,
   },
 
   verseArea: {
     // backgroundColor: 'red',
-    minHeight: 350,
+    minHeight: 50,
     width: "100%",
-    marginBottom: 10,
+    marginBottom: 250,
     padding: "2%",
+    // paddingBottom: '10%',
     flexDirection: "row",
     // marginTop: -417,
     position: "relative",
-    top: "-110%",
+    top: "-35%",
   },
 
   individualChapters: {
