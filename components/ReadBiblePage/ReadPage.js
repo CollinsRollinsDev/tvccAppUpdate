@@ -39,7 +39,7 @@ const ReadPage = () => {
   return (
     <View style={styles.body}>
       <Header name={currentBook && currentChapter ? `${currentBook} chapter ${currentChapter}` : "Loading..."} leftSide="Search" />
-      <ScrollView>
+      <ScrollView style={styles.scroll}>
 
         <FlatList
           // contentContainerStyle={styles.grid}
@@ -71,7 +71,10 @@ const styles = StyleSheet.create({
   body: {
     minHeight: "100%",
     width: "100%",
-    paddingBottom: 100,
+    // marginBottom: 100,
+  },
+  scroll: {
+    marginBottom: 80
   },
   scripture: {
     width: "100%",
