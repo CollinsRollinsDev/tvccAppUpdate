@@ -55,8 +55,9 @@ const Bible = ({ navigation }) => {
 
   const filterBookPicked = async (e, f) => {
     await dispatch(setCurrentBook(e));
-    console.log(e)
+    console.log( "the e is:",e)
     let bibleArr
+    
     if(f == "oldTestament"){
       bibleArr = await Object.entries(oldTestament);
       const filteredArr = await bibleArr.filter(function ([key, value]) {
@@ -64,13 +65,10 @@ const Bible = ({ navigation }) => {
       });
 
       setUserPickedOld(filteredArr[0][1].chapters);
-      // console.log(filteredArr[0])
+      // console.log(filteredArr[0][1])
       const newObj = await Object.fromEntries(filteredArr);
       // console.log(newObj)
     } else if(f == "newTestament"){
-      // if(e == "Genesis"){
-      //   e = "Matthew"
-      // }
       bibleArr = await Object.entries(newTestament);
       const filteredArr = await bibleArr.filter(function ([key, value]) {
         return key === e;
@@ -87,6 +85,10 @@ const Bible = ({ navigation }) => {
     }
     
   };
+
+  useEffect(() => {
+    testamantPicked == "newTestament" ? setSelectedBook("Matthew") : testamantPicked == "oldTestament" ? setSelectedBook("Genesis") : null
+  }, [testamantPicked])
 
   useEffect(() => {
     filterBookPicked(selectedBook, testamantPicked);
@@ -170,7 +172,6 @@ const Bible = ({ navigation }) => {
                   setSelectedBook(itemValue)
                 }
               >
-                <Picker.Item label="Select a book" value="" />
                 <Picker.Item label="Genesis" value="Genesis" />
                 <Picker.Item label="Exodus" value="Exodus" />
                 <Picker.Item label="Leviticus" value="Leviticus" />
@@ -222,7 +223,6 @@ const Bible = ({ navigation }) => {
                   setSelectedBook(itemValue)
                 }
               >
-                <Picker.Item label="Select a book" value="Matthew" />
                 <Picker.Item label="Matthew" value="Matthew" />
                 <Picker.Item label="Mark" value="Mark" />
                 <Picker.Item label="Luke" value="Luke" />
