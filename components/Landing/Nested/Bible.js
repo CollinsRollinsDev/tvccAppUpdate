@@ -22,6 +22,7 @@ import {
   LogBox,
  
 } from "react-native";
+import SelectTestament from "./SelectTestament";
 
 const updateSearch = () => {
 
@@ -44,13 +45,13 @@ const Bible = ({navigation}) => {
     const [displayChapters, setDisplayChapters] = useState(true);
     let   [verseArr, setVerseArr] = useState();
     let   [verseSelected, setVerseSelected] = useState(null);
+    let   [testamantPicked, setTestamentPicked] = useState(null);
+    
 
     const oldTestament = scriptures[0].oldTestament;
-    // const oldTestament = scriptures[0].books[0].oldTestament;
+    const newTestament = scriptures[0].newTestament;
 
     const filterBookPicked = async(e) => {
-      // console.log(e)
-      // setSelectedBook(e)
       await dispatch(setCurrentBook(e))
       const bibleArr = await Object.entries(oldTestament);
       const filteredArr = await bibleArr.filter(function([key, value]){
@@ -130,12 +131,17 @@ const Bible = ({navigation}) => {
                 placeholder="Search Here..."
       />
             </View>
-            {/* <View style={styles.getter}>
-          
-            </View> */}
+            
+            <SelectTestament setTestamentPicked={setTestamentPicked} />
+             
 
+            {testamantPicked ? 
+              // Display the bible book select part
             <View style={styles.selector}>
+
                 <Text style={styles.testamentDecleartion}>Old Testament</Text>
+                {
+                testamantPicked == "oldTestament" ? 
                 <View style={styles.bookArea}>
                 <Picker
                 style={styles.oldBook}
@@ -185,7 +191,66 @@ const Bible = ({navigation}) => {
                  </Picker>
                
                 </View>
-                
+               
+               :
+
+               testamantPicked == "newTestament" ? 
+
+               // do something
+               <View style={styles.bookArea}>
+               <Picker
+               style={styles.oldBook}
+               selectedValue={selectedBook}
+               onValueChange={(itemValue, itemIndex) =>
+                   setSelectedBook(itemValue)
+               }>
+               <Picker.Item label="Matthew" value="Matthew" />
+               <Picker.Item label="Exodus" value="Exodus" />
+               <Picker.Item label="Leviticus" value="Leviticus" />
+               <Picker.Item label="Numbers" value="Numbers" />
+               <Picker.Item label="Deuteronomy" value="Deuteronomy" />
+               <Picker.Item label="Joshua" value="Joshua" />
+               <Picker.Item label="Judges" value="Judges" />
+               <Picker.Item label="Ruth" value="Ruth" />
+               <Picker.Item label="1 Samuel" value="1 Samuel" />
+               <Picker.Item label="2 Samuel" value="2 Samuel" />
+               <Picker.Item label="1 Kings" value="1 Kings" />
+               <Picker.Item label="2 Kings" value="2 Kings" />
+               <Picker.Item label="1 Chronicles" value="1 Chronicles" />
+               <Picker.Item label="2 Chronicles" value="2 Chronicles" />
+               <Picker.Item label="Ezra" value="Ezra" />
+               <Picker.Item label="Nehemiah" value="Nehemiah" />
+               <Picker.Item label="Esther" value="Esther" />
+               <Picker.Item label="Job" value="Job" />
+               <Picker.Item label="Psalms" value="Psalms" />
+               <Picker.Item label="Proverbs" value="Proverbs" />
+               <Picker.Item label="Ecclesiastes" value="Ecclesiastes" />
+               <Picker.Item label="Song of Solomon" value="Song of Solomon" />
+               <Picker.Item label="Isaiah" value="Isaiah" />
+               <Picker.Item label="Jeremiah" value="Jeremiah" />
+               <Picker.Item label="Lamentations" value="Lamentations" />
+               <Picker.Item label="Ezekiel" value="Ezekiel" />
+               <Picker.Item label="Daniel" value="Daniel" />
+               <Picker.Item label="Hosea" value="Hosea" />
+               <Picker.Item label="Joel" value="Joel" />
+               <Picker.Item label="Amos" value="Amos" />
+               <Picker.Item label="Obadiah" value="Obadiah" />
+               <Picker.Item label="Jonah" value="Jonah" />
+               <Picker.Item label="Micah" value="Micah" />
+               <Picker.Item label="Nahum" value="Nahum" />
+               <Picker.Item label="Habakkuk" value="Habakkuk" />
+               <Picker.Item label="Zephaniah" value="Zephaniah" />
+               <Picker.Item label="Haggai" value="Haggai" />
+               <Picker.Item label="Zechariah" value="Zechariah" />
+               <Picker.Item label="Malachi" value="Malachi" />
+                </Picker>
+              
+               </View>
+               :
+
+               null
+
+             }
                 
                 {
                   displayChapters ? <Text style={styles.chapterDecleartion}>Chapters</Text> : null
@@ -241,7 +306,9 @@ const Bible = ({navigation}) => {
                 </ScrollView>
 
             </View>
-           
+           :
+           null
+         }
         </View>
         
     )

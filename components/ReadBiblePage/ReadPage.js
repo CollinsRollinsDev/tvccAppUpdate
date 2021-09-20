@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   body: {
     minHeight: "100%",
     width: "100%",
-    marginBottom: 50,
+    paddingBottom: 100,
   },
   scripture: {
     width: "100%",
