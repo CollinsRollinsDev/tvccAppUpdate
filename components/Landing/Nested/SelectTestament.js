@@ -24,15 +24,16 @@ import {
 } from "react-native";
 
 
-const SelectTestament = ({setTestamentPicked}) => {
+const SelectTestament = ({setTestamentPicked,selectedBook}) => {
     return (
         <View style={styles.bookArea}>
              <Picker
                 style={styles.oldBook}
-                // selectedValue={selectedBook}
+                selectedValue={selectedBook}
                 onValueChange={(itemValue, itemIndex) =>
                     setTestamentPicked(itemValue)
                 }>
+                <Picker.Item label="Select Testament" value="" />
                 <Picker.Item label="Old Testament" value="oldTestament" />
                 <Picker.Item label="New Testament" value="newTestament" />
                 </Picker>
