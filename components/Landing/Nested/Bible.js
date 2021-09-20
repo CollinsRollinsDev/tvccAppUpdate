@@ -361,24 +361,25 @@ const styles = StyleSheet.create({
     paddingLeft: "2%",
   },
   chapterArea: {
-    //   backgroundColor: 'red',
-    height: "auto",
+      // backgroundColor: 'red',
+    minHeight: 350,
     width: "100%",
-    marginBottom: 300,
-    padding: "3%",
+    marginBottom: 10,
+    // marginTop: -150,
+    padding: "2%",
     flexDirection: "row",
   },
 
   verseArea: {
     // backgroundColor: 'red',
-    minHeight: 100,
+    minHeight: 350,
     width: "100%",
-    marginBottom: 300,
-    padding: "3%",
+    marginBottom: 10,
+    padding: "2%",
     flexDirection: "row",
     // marginTop: -417,
     position: "relative",
-    top: "-90%",
+    top: "-110%",
   },
 
   individualChapters: {
@@ -443,7 +444,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontWeight: "bold",
     position: "relative",
-    top: "-25%",
+    top: "-30%",
   },
   grid: {
     flex: 1,
