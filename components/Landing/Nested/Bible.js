@@ -257,6 +257,9 @@ const Bible = ({ navigation }) => {
           {displayChapters ? (
             <Text style={styles.chapterDecleartion}>Chapters</Text>
           ) : null}
+          {!displayChapters ? (
+              <Text style={styles.verseDecleartion}>Verses</Text>
+            ) : null}
           <ScrollView>
             <View style={styles.chapterArea}>
               {displayChapters ? (
@@ -277,9 +280,9 @@ const Bible = ({ navigation }) => {
               ) : null}
             </View>
 
-            {!displayChapters ? (
+            {/* {!displayChapters ? (
               <Text style={styles.verseDecleartion}>Verses</Text>
-            ) : null}
+            ) : null} */}
             <View style={styles.verseArea}>
               {!displayChapters ? (
                 <FlatList
@@ -427,24 +430,15 @@ const styles = StyleSheet.create({
     color: "white",
     marginTop: 10,
     fontWeight: "bold",
-    // position: 'absolute',
-    // zIndex: 1,
-    // top: 0,
-    // right: 0,
-    // bottom: 0,
-    // left: 0,
   },
 
   verseDecleartion: {
-    textAlign: "left",
     marginLeft: "5%",
     marginBottom: "3%",
     fontSize: 19,
     color: "white",
     marginTop: 10,
     fontWeight: "bold",
-    position: "relative",
-    top: "-30%",
   },
   grid: {
     flex: 1,
