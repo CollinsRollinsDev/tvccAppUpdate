@@ -34,6 +34,9 @@ const { currentTitle, currentPostBody, currentMinistering} =
       <Header name="Add a Note" leftSide="Search" />
         <View style={styles.notePreviewContainer}>
         <TextInput style={styles.input} placeholder="Title Here...." />
+        <TextInput style={styles.input} placeholder="Ministering Here...." />
+        <TextInput multiline={true} style={styles.inputPost} placeholder="Start Adding Note Here...." />
+
         </View>
     </View>
   );
@@ -62,5 +65,12 @@ const styles = StyleSheet.create({
     borderRightColor: 'transparent',
     textAlign: 'left',
     fontSize: 18,
+},
+inputPost:{
+    backgroundColor: 'transparent',
+    width: '100%',
+    // minHeight: 400,
+    textAlign: 'left',
+    fontSize: 17,
 }
 });
