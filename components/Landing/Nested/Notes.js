@@ -50,6 +50,7 @@ const Notes = ({navigation}) => {
 
   const handleAddNote = () => {
     //   console.log("working")
+    navigation.push("AddNote")
   }
 
   return (
