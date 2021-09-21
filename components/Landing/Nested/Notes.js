@@ -13,20 +13,16 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-  LogBox
+  LogBox,
 } from "react-native";
 import myNotes from "../../../assets/Notes.json";
 
 const Notes = () => {
-    useEffect(() => {
-        LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-      }, []);
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
 
-      const handleChapterPress = async(event) => {
-
-      }
-
-
+  const handleChapterPress = async (event) => {};
 
   return (
     <View style={styles.body}>
@@ -43,18 +39,16 @@ const Notes = () => {
                 onPress={() => handleChapterPress(item.id)}
                 // style={styles.individualChapters}
               >
-            <View style={styles.preview}>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.preacher}>{item.ministering}</Text>
-            <Text style={styles.excerpt}>
-              {item.body.substring(0,30) + "..."}
-            </Text>
-          </View>
+                <View style={styles.preview}>
+                  <Text style={styles.title}>{item.title}</Text>
+                  <Text style={styles.preacher}>{item.ministering}</Text>
+                  <Text style={styles.excerpt}>
+                    {item.body.substring(0, 70) + "..."}
+                  </Text>
+                </View>
               </TouchableOpacity>
             )}
           />
-
-         
         </View>
       </ScrollView>
     </View>
