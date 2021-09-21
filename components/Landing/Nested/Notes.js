@@ -14,9 +14,9 @@ import {
   FlatList,
   TouchableOpacity,
   LogBox,
+  ListViewBase,
 } from "react-native";
 import myNotes from "../../../assets/Notes.json";
-import Note from "./Note";
 import { useSelector, useDispatch } from "react-redux";
 import {
     setCurrentTitle,
@@ -47,6 +47,10 @@ const Notes = ({navigation}) => {
     // console.log("ministering:", ministering)
     // console.log("post:", post)
   };
+
+  const handleAddNote = () => {
+    //   console.log("working")
+  }
 
   return (
     <View style={styles.body}>
@@ -80,6 +84,13 @@ const Notes = ({navigation}) => {
             displayNotePage ? <Note  /> : null
         } */}
       </ScrollView>
+
+      <TouchableOpacity onPress={handleAddNote} style={styles.addBox}>
+            <Text style={styles.icon}>
+                add
+            </Text>
+      </TouchableOpacity>
+
     </View>
   );
 };
@@ -126,4 +137,20 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginRight: "5%",
   },
+  addBox: {
+    backgroundColor: 'blue',
+    height: 70,
+    width: 70,
+    borderRadius:70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: "80%",
+    right: '5%',
+  },
+  icon: {
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: 17,
+  }
 });
