@@ -19,6 +19,7 @@ import { Provider } from "react-redux";
 import { Store } from "./reduxStore/store.js";
 import Index from './components/Landing/Index';
 import Event from "./components/Events/Event.js";
+import Notes from "./components/Landing/Nested/Notes.js";
 
 export default function App() {
   return (
@@ -31,7 +32,8 @@ export default function App() {
         {/* <Bible /> */}
         {/* <ReadPage /> */}
         {/* <Event /> */}
-        <Index />
+        <Notes />
+        {/* <Index /> */}
       </View>
     </Provider>
   );
