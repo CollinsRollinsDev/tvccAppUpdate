@@ -17,6 +17,8 @@ import HomePage from './HomePage';
 import Bible from "./Nested/Bible";
 import ReadPage from "../ReadBiblePage/ReadPage";
 import Event from "../Events/Event";
+import Notes from "./Nested/Notes";
+import Note from "./Nested/Note";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,8 @@ const Index = () => {
             <Stack.Screen name="Bible" component={Bible} options={{ headerShown: false }}/>
             <Stack.Screen name="ReadPage" component={ReadPage} options={{ headerShown: false }}/>
             <Stack.Screen name="Event" component={Event} options={{ headerShown: false }}/>
+            <Stack.Screen name="Notes" component={Notes} options={{ headerShown: false }}/>
+            <Stack.Screen name="Note" component={Note} options={{ headerShown: false }}/>
         </Stack.Navigator>
     </NavigationContainer>
     )

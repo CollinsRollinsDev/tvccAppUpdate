@@ -38,7 +38,7 @@ const Menus = ({navigation}) => {
                 <Text style={styles.content}>Word Bliss</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menu}>
+            <TouchableOpacity onPress={() => navigation.push("Notes")} style={styles.menu}>
                 <Text style={styles.content}>Notes</Text>
             </TouchableOpacity>
 

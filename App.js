@@ -32,8 +32,8 @@ export default function App() {
         {/* <Bible /> */}
         {/* <ReadPage /> */}
         {/* <Event /> */}
-        <Notes />
-        {/* <Index /> */}
+        {/* <Notes /> */}
+        <Index />
       </View>
     </Provider>
   );

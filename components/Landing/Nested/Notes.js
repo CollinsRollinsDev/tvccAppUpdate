@@ -16,19 +16,44 @@ import {
   LogBox,
 } from "react-native";
 import myNotes from "../../../assets/Notes.json";
+import Note from "./Note";
+import { useSelector, useDispatch } from "react-redux";
+import {
+    setCurrentTitle,
+    setCurrentMinistering,
+    setCurrentPostBody,
+  } from "../../../reduxStore/actions";
+ 
+const Notes = ({navigation}) => {
+    // const { currentTitle, currentPostBody, currentMinistering} =
+    // useSelector((state) => state.useTheReducer);
 
-const Notes = () => {
+  const dispatch = useDispatch();
+
+    const [displayNotePage, setDisplayNotePage] = useState(false)
+
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
 
-  const handleChapterPress = async (event) => {};
+  const handleChapterPress = async (id, title, ministering, post) => {
+    setDisplayNotePage(true);
+    // navigation.push("Note")
+    dispatch(setCurrentTitle(title))
+    dispatch(setCurrentMinistering(ministering))
+    dispatch(setCurrentPostBody(post))
+    // console.log("id:", id)
+    // console.log("title:", title)
+    // console.log("ministering:", ministering)
+    // console.log("post:", post)
+  };
 
   return (
     <View style={styles.body}>
       <Header name="Notes" leftSide="Search" />
       <ScrollView>
         <View style={styles.notePreviewContainer}>
+            
           <FlatList
             // contentContainerStyle={styles.grid}
             // numColumns={4}
@@ -36,7 +61,11 @@ const Notes = () => {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <TouchableOpacity
-                onPress={() => handleChapterPress(item.id)}
+                onPress={async() => {
+                    await handleChapterPress(item.id, item.title, item.ministering, item.body);
+                    navigation.push("Note");
+                }
+            }
                 // style={styles.individualChapters}
               >
                 <View style={styles.preview}>
@@ -50,6 +79,10 @@ const Notes = () => {
             )}
           />
         </View>
+
+        {/* {
+            displayNotePage ? <Note  /> : null
+        } */}
       </ScrollView>
     </View>
   );

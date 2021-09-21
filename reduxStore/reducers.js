@@ -1,9 +1,12 @@
-import { SET_CURRENT_BOOK, SET_CURRENT_CHAPTER, SET_CURRENT_VERSE, SET_CURRENT_SCRIPTURE } from './actions';
+import { SET_CURRENT_BOOK, SET_CURRENT_CHAPTER, SET_CURRENT_VERSE, SET_CURRENT_SCRIPTURE, SET_CURRENT_TITLE, SET_CURRENT_MINISTERING, SET_CURRENT_POSTBODY } from './actions';
 
 let initialState = {
     currentBook : '',
     currentChapter : '',
     currentVerse : '',
+    currentTitle: '',
+    currentMinistering: '',
+    currentPostBody: '',
     currentScripture : [],
 }
 
@@ -21,6 +24,15 @@ function useTheReducer(state = initialState, action){
         case SET_CURRENT_SCRIPTURE:
             return {...state, currentScripture: action.payload}
     
+        case SET_CURRENT_TITLE:
+            return {...state, currentTitle: action.payload}
+    
+        case SET_CURRENT_MINISTERING:
+            return {...state, currentMinistering: action.payload}
+    
+        case SET_CURRENT_POSTBODY:
+            return {...state, currentPostBody: action.payload}
+                
         default:
             return state;
     }
