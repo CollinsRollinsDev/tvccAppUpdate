@@ -13,7 +13,7 @@
   {
     "type": "Program",
     "name": "Too Hot To Be Hurt",
-    "time": "18:00:00",
+    "time": "11:59:00",
     "date": "Dec 4, 2021",
     "host": "Pst Jude Eke",
     "guest": ["Pst Cyril Levi", "Pst Evans Smith"],
@@ -25,7 +25,7 @@
   {
     "type": "Weekly Activity",
     "name": "Sunday Worship Service",
-    "time": "18:00:00",
+    "time": "09:00:00",
     "date": "Dec 17, 2021",
     "host": "Pst Jude Eke",
     "guest": [],
@@ -37,7 +37,7 @@
   {
     "type": "Program",
     "name": "Youth Day: Blissful Age",
-    "time": "18:00:00",
+    "time": "10:30:59",
     "date": "Jan 13, 2022",
     "host": "Pst Jude Eke",
     "guest": [],
