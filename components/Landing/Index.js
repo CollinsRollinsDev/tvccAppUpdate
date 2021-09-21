@@ -16,6 +16,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import HomePage from './HomePage';
 import Bible from "./Nested/Bible";
 import ReadPage from "../ReadBiblePage/ReadPage";
+import Event from "../Events/Event";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ const Index = () => {
             <Stack.Screen name="About" component={About} options={{ headerShown: false }}/>
             <Stack.Screen name="Bible" component={Bible} options={{ headerShown: false }}/>
             <Stack.Screen name="ReadPage" component={ReadPage} options={{ headerShown: false }}/>
+            <Stack.Screen name="Event" component={Event} options={{ headerShown: false }}/>
         </Stack.Navigator>
     </NavigationContainer>
     )

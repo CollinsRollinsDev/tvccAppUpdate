@@ -50,7 +50,7 @@ const Menus = ({navigation}) => {
                 <Text style={styles.content}>Sermon/Word of God</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menu}>
+            <TouchableOpacity onPress={() => navigation.push("Event")}  style={styles.menu}>
                 <Text style={styles.content}>Events</Text>
             </TouchableOpacity>
 

@@ -18,6 +18,7 @@ import ReadPage from "./components/ReadBiblePage/ReadPage.js";
 import { Provider } from "react-redux";
 import { Store } from "./reduxStore/store.js";
 import Index from './components/Landing/Index';
+import Event from "./components/Events/Event.js";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
         {/* <About /> */}
         {/* <Bible /> */}
         {/* <ReadPage /> */}
+        {/* <Event /> */}
         <Index />
       </View>
     </Provider>
