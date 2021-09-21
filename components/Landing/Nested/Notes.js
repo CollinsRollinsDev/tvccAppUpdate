@@ -53,10 +53,7 @@ const Notes = ({navigation}) => {
       <Header name="Notes" leftSide="Search" />
       <ScrollView>
         <View style={styles.notePreviewContainer}>
-            
           <FlatList
-            // contentContainerStyle={styles.grid}
-            // numColumns={4}
             data={myNotes}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
@@ -66,7 +63,6 @@ const Notes = ({navigation}) => {
                     navigation.push("Note");
                 }
             }
-                // style={styles.individualChapters}
               >
                 <View style={styles.preview}>
                   <Text style={styles.title}>{item.title}</Text>
