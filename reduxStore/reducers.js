@@ -1,6 +1,6 @@
 import { SET_CURRENT_BOOK, SET_CURRENT_CHAPTER, SET_CURRENT_VERSE, SET_CURRENT_SCRIPTURE } from './actions';
 
-const initialState = {
+let initialState = {
     currentBook : '',
     currentChapter : '',
     currentVerse : '',

@@ -27,6 +27,7 @@ import {
   LogBox,
 } from "react-native";
 import SelectTestament from "./SelectTestament";
+import useSafeState from "react-use-safe-state";
 
 const updateSearch = () => {};
 
@@ -44,11 +45,12 @@ const Bible = ({ navigation }) => {
   const [search, updateSearch] = useState("");
   let [selectedBook, setSelectedBook] = useState();
   const [userPickedOld, setUserPickedOld] = useState();
-  let [selectedChapter, setSelectedChapter] = useState();
+  let [selectedChapter, setSelectedChapter] = useSafeState();
   const [displayChapters, setDisplayChapters] = useState(true);
   let [verseArr, setVerseArr] = useState();
   let [verseSelected, setVerseSelected] = useState(null);
   let [testamantPicked, setTestamentPicked] = useState(null);
+  // let [refreshChapter, setRefreshChapter] = useState();
 
   const oldTestament = scriptures[0].oldTestament;
   const newTestament = scriptures[0].newTestament;
@@ -96,7 +98,11 @@ const Bible = ({ navigation }) => {
   }, [selectedBook]);
 
   const getVerses = async (e) => {
-    await e;
+    if(e){
+      console.log("updated")
+    } else{
+      console.log("Stucked!")
+    }
     // await e.toString();
     const toFilter = await userPickedOld;
     const filtered = await toFilter.filter((each) => each.chapter == e);
@@ -107,9 +113,10 @@ const Bible = ({ navigation }) => {
 
   useEffect(() => {
     !displayChapters ? getVerses(selectedChapter) : null;
-  }, [userPickedOld, selectedChapter]);
+  }, [userPickedOld, displayChapters]);
 
   const handleChapterPress = async (e) => {
+
     setSelectedChapter(parseInt(e));
     setSelectedChapter((selectedChapter = e));
     // console.log(selectedChapter)
@@ -123,16 +130,16 @@ const Bible = ({ navigation }) => {
   };
 
   async function dispatchItems() {
-    await dispatch(setCurrentChapter(selectedChapter));
-    await dispatch(setCurrentVerse(verseSelected));
-    await dispatch(setCurrentScripture(verseArr));
+     dispatch(setCurrentChapter(selectedChapter));
+     dispatch(setCurrentVerse(verseSelected));
+     dispatch(setCurrentScripture(verseArr));
   }
 
   useEffect(() => {
     // console.log("Moving to readable page")
     dispatchItems();
     // navigation.push("ReadPage")
-  }, [verseSelected]);
+  }, [verseArr]);
 
   // console.log("book",currentBook)
   // console.log("chapter", currentChapter)

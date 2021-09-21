@@ -23,7 +23,7 @@ const HomePage = ({navigation}) => {
             <View style={styles.upperContainer}>
               <View style={styles.churchText}>
                 <Text style={styles.churchName}>Truevine Christian Center</Text>
-                <Text style={styles.churchSlogan}>Mount of Grace</Text>
+                <Text style={styles.churchSlogan}>Mount of Grace and Glory</Text>
               </View>
            
               <View style={styles.imgView}>
@@ -67,10 +67,11 @@ const styles = StyleSheet.create({
 
   },
   churchSlogan: {
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'white',
+    marginTop: 25
   },
   stretch: {
     width: '100%',

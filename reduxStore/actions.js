@@ -3,28 +3,28 @@ export const SET_CURRENT_CHAPTER = "SET_CURRENT_CHAPTER";
 export const SET_CURRENT_VERSE = "SET_CURRENT_VERSE";
 export const SET_CURRENT_SCRIPTURE = "SET_CURRENT_SCRIPTURE";
 
-export const setCurrentBook = payload => dispatch => {
+export let setCurrentBook = payload => dispatch => {
     dispatch({
         type: SET_CURRENT_BOOK,
         payload: payload
     })
 }
 
-export const setCurrentChapter = payload => dispatch => {
+export let setCurrentChapter = payload => dispatch => {
     dispatch({
         type: SET_CURRENT_CHAPTER,
         payload: payload
     })
 }
 
-export const setCurrentVerse = payload => dispatch => {
+export let setCurrentVerse = payload => dispatch => {
     dispatch({
         type: SET_CURRENT_VERSE,
         payload: payload
     })
 }
 
-export const setCurrentScripture = payload => dispatch => {
+export let setCurrentScripture = payload => dispatch => {
     dispatch({
         type: SET_CURRENT_SCRIPTURE,
         payload: payload
