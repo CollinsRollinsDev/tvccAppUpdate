@@ -52,6 +52,7 @@ const { currentTitle, currentPostBody, currentMinistering} =
             placeholder={"Start Adding Note Here...."}
             placeholderTextColor={'#5661db'}
             underlineColorAndroid={'transparent'}
+            // numberOfLines={2}
   />
         </View>
         <TouchableOpacity onPress={handleSave} style={styles.saveBtn}>
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
 inputPost:{
     backgroundColor: 'transparent',
     width: '100%',
-    // minHeight: 400,
+    minHeight: 400,
     textAlign: 'left',
     textAlignVertical: 'top',
     fontSize: 17,
