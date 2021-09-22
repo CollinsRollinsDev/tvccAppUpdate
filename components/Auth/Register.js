@@ -31,7 +31,8 @@ const Register = () => {
     const handleSubmit = async() => {
         
         
-   if(!firstName || !lastName || !phoneNumber || !userRole || userRole == '' || !emailAddress){
+//    if(!firstName || !lastName || !phoneNumber || !userRole || userRole == '' || !emailAddress){
+    if(!firstName){
     
     Alert.alert(
         `ERROR!!!`,
@@ -80,7 +81,20 @@ const Register = () => {
        });
    
        const result = await res.json();
-       alert(JSON.stringify(result.message));
+        
+       Alert.alert(
+        `ERROR!!!`,
+        `${JSON.stringify(result.message)}`,
+        [
+        //   {
+        //     text: "Cancel",
+        //     onPress: () => console.log("Cancel Pressed"),
+        //     style: "cancel"
+        //   },
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+    //    alert();
        // setResponse(result)
        // alert(response);
        if(result.success === true){
@@ -94,18 +108,18 @@ const Register = () => {
 }
 
 
-        Alert.alert(
-            `Quick Info:`,
-            `${lastName}`,
-            [
-              {
-                text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel"
-              },
-              { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-          );
+        // Alert.alert(
+        //     `Quick Info:`,
+        //     `${lastName}`,
+        //     [
+        //       {
+        //         text: "Cancel",
+        //         onPress: () => console.log("Cancel Pressed"),
+        //         style: "cancel"
+        //       },
+        //       { text: "OK", onPress: () => console.log("OK Pressed") }
+        //     ]
+        //   );
     }
 
     return (
