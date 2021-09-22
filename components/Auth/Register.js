@@ -19,7 +19,6 @@ import {
 
 const Register = () => {
 
-    const [selectedRole, setSelectedRole] = useState()
     const [firstName, setFirstName] = useState()
     const [lastName, setLastName] = useState()
     const [phoneNumber, setPhoneNumber] = useState()
@@ -27,11 +26,73 @@ const Register = () => {
     const [userRole, setUserRole] = useState()
     const [password, setPassword] = useState()
     const [confirmPassword, setConfirmPassword] = useState()
+    const [btnMsg, setBtnMsg] = useState('Create My Account')
 
     const handleSubmit = async() => {
-        console.log(firstName)
-        console.log(lastName)
-        console.log(userRole)
+        
+        
+   if(!firstName || !lastName || !phoneNumber || !userRole || userRole == '' || !emailAddress){
+    
+    Alert.alert(
+        `ERROR!!!`,
+        `It seems you are mising something. Please check the information provided and try again`,
+        [
+        //   {
+        //     text: "Cancel",
+        //     onPress: () => console.log("Cancel Pressed"),
+        //     style: "cancel"
+        //   },
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+
+} else {
+    if(password !== confirmPassword){
+       
+        Alert.alert(
+            `ERROR!!!`,
+            `Sorry, mismatched credentials!`,
+            [
+            //   {
+            //     text: "Cancel",
+            //     onPress: () => console.log("Cancel Pressed"),
+            //     style: "cancel"
+            //   },
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+
+    } else{
+     setBtnMsg("Registering, please wait...")
+     const res = await fetch("http://localhost/8080/signup", {
+         body: JSON.stringify({
+           firstName: firstName,
+           lastName: lastName,
+           phoneNumber: phoneNumber,
+           userRole: userRole,
+           password: password,
+           emailAddress: emailAddress
+         }),
+         headers: {
+           "Content-Type": "application/json",
+         },
+         method: "POST",
+       });
+   
+       const result = await res.json();
+       alert(JSON.stringify(result.message));
+       // setResponse(result)
+       // alert(response);
+       if(result.success === true){
+        //  router.push("/login")
+        setBtnMsg("Login success")
+       } else{
+        setBtnMsg("Sign Up")
+       }
+       // location.reload();
+    }
+}
+
 
         Alert.alert(
             `Quick Info:`,
@@ -76,7 +137,7 @@ const Register = () => {
                 <TextInput onChangeText={(e) => setPassword(e)} style={styles.input}  placeholder="Password"/>
                 <TextInput onChangeText={(e) => setConfirmPassword(e)} style={styles.input}  placeholder="Confirm Password"/>
                 <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
-                    <Text style={styles.btnText}>Create My Account</Text>
+                    <Text style={styles.btnText}>{btnMsg}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.alt}>
