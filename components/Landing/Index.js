@@ -20,6 +20,9 @@ import Event from "../Events/Event";
 import Notes from "./Nested/Notes";
 import Note from "./Nested/Note";
 import AddNote from './Nested/AddNote'
+import Login from '../Auth/Login';
+import Register from '../Auth/Register';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -27,7 +30,8 @@ const Index = () => {
     return (
         <NavigationContainer>
         <Stack.Navigator>
-            <Stack.Screen name="TVCC" component={HomePage} options={{ headerShown: false }}/>
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+            <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }}/>
             <Stack.Screen name="About" component={About} options={{ headerShown: false }}/>
             <Stack.Screen name="Bible" component={Bible} options={{ headerShown: false }}/>
             <Stack.Screen name="ReadPage" component={ReadPage} options={{ headerShown: false }}/>
@@ -35,8 +39,10 @@ const Index = () => {
             <Stack.Screen name="Notes" component={Notes} options={{ headerShown: false }}/>
             <Stack.Screen name="Note" component={Note} options={{ headerShown: false }}/>
             <Stack.Screen name="AddNote" component={AddNote} options={{ headerShown: false }}/>
+            <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
         </Stack.Navigator>
     </NavigationContainer>
+    
     )
 }
 

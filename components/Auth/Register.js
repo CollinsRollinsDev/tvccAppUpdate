@@ -17,16 +17,37 @@ import {
     Alert
 } from "react-native";
 
-const Register = () => {
+const Register = ({navigation}) => {
 
     const [firstName, setFirstName] = useState()
     const [lastName, setLastName] = useState()
     const [phoneNumber, setPhoneNumber] = useState()
     const [emailAddress, setEmailAddress] = useState()
     const [userRole, setUserRole] = useState()
+    let [userDepartment, setuserDepartment] = useState()
     const [password, setPassword] = useState()
     const [confirmPassword, setConfirmPassword] = useState()
     const [btnMsg, setBtnMsg] = useState('Create My Account')
+
+
+
+    const deptToggle = userRole == "worker" ? 
+                 <View style={styles.roleBox}>
+                        <Picker
+                        style={styles.role}
+                        selectedValue={userDepartment}
+                        onValueChange={(itemValue, itemIndex) =>
+                        setuserDepartment(itemValue)
+                        }
+                    >
+                        <Picker.Item label="Choose Your Department" value="" />
+                        <Picker.Item label="Ministers Department" value="ministers_department" />
+                        <Picker.Item label="Ushering Department" value="ushering_department" />
+                        <Picker.Item label="Choir Department" value="choir_department" />
+                        <Picker.Item label="Media Department" value="ushering_department" />
+                    </Picker>
+                </View> : null
+
 
     const handleSubmit = async() => {
         
@@ -65,14 +86,15 @@ const Register = () => {
 
     } else{
      setBtnMsg("Registering, please wait...")
-     const res = await fetch("http://localhost/8080/signup", {
+     const res = await fetch("http://10.2.213.237:8080/signup", {
          body: JSON.stringify({
            firstName: firstName,
            lastName: lastName,
            phoneNumber: phoneNumber,
            userRole: userRole,
            password: password,
-           emailAddress: emailAddress
+           emailAddress: emailAddress,
+           userDepartment: userRole == "member" ? userDepartment = null : userDepartment,
          }),
          headers: {
            "Content-Type": "application/json",
@@ -83,20 +105,12 @@ const Register = () => {
        const result = await res.json();
         
        Alert.alert(
-        `ERROR!!!`,
+        `CONGRATULATIONS!!!`,
         `${JSON.stringify(result.message)}`,
         [
-        //   {
-        //     text: "Cancel",
-        //     onPress: () => console.log("Cancel Pressed"),
-        //     style: "cancel"
-        //   },
-          { text: "OK", onPress: () => console.log("OK Pressed") }
+          { text: "OK", onPress: () => navigation.push("Login") }
         ]
       );
-    //    alert();
-       // setResponse(result)
-       // alert(response);
        if(result.success === true){
         //  router.push("/login")
         setBtnMsg("Login success")
@@ -106,20 +120,6 @@ const Register = () => {
        // location.reload();
     }
 }
-
-
-        // Alert.alert(
-        //     `Quick Info:`,
-        //     `${lastName}`,
-        //     [
-        //       {
-        //         text: "Cancel",
-        //         onPress: () => console.log("Cancel Pressed"),
-        //         style: "cancel"
-        //       },
-        //       { text: "OK", onPress: () => console.log("OK Pressed") }
-        //     ]
-        //   );
     }
 
     return (
@@ -148,13 +148,16 @@ const Register = () => {
                     </Picker>
                 </View>
 
+                {   deptToggle  }
+
+
                 <TextInput onChangeText={(e) => setPassword(e)} style={styles.input}  placeholder="Password"/>
                 <TextInput onChangeText={(e) => setConfirmPassword(e)} style={styles.input}  placeholder="Confirm Password"/>
                 <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
                     <Text style={styles.btnText}>{btnMsg}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.alt}>
+                <TouchableOpacity onPress={() => navigation.push("Login")} style={styles.alt}>
                 <Text style={styles.altClick}>
                 Already have an account? Sign In!
                 </Text>
