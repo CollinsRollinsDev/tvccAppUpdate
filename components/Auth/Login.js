@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
     StyleSheet,
     Text,
@@ -13,13 +13,34 @@ import {
     FlatList,
     SafeAreaView,
     LogBox,
-    Alert
+    Alert,
+    RefreshControl,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserDetails } from '../../reduxStore/actions';
 
 const Login = ({navigation}) => {
+    const dispatch = useDispatch();
+    const { userDetails } =
+    useSelector((state) => state.useTheReducer);
+
+    // console.log(userDetails);
+
+
+    const [refreshing, setRefreshing] = useState(false);
     const [btnMsg, setBtnMsg] = useState('Login')
     const [emailAddress, setEmailAddress] = useState()
     const [password, setPassword] = useState()
+
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+      }
+      
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+      }, []);
 
     const handleSubmit = async() => {
 
@@ -48,7 +69,7 @@ const Login = ({navigation}) => {
 
             if(data.success == true){
                 let user_data = data.details
-                //     // dispatch(updatingUserDetails(user_data))
+                    dispatch(setUserDetails(user_data))
                 //     // console.log(user_data)
                 setBtnMsg("Access Granted. Redirecting...");
 
@@ -77,18 +98,23 @@ const Login = ({navigation}) => {
 
     return (
         <View style={styles.body}>
+            {/* <ScrollView> */}
             <Text style={styles.info}> Please, Login below</Text>
             <TextInput onChangeText={(e) => setEmailAddress(e)} style={styles.input} placeholder="email address" />
             <TextInput onChangeText={(e) => setPassword(e)}  style={styles.input}  placeholder="password"/>
             <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
                     <Text style={styles.btnText}>{btnMsg}</Text>
                 </TouchableOpacity>
-
                       <TouchableOpacity onPress={() => navigation.push("Register")} style={styles.alt}>
                 <Text style={styles.altClick}>
                 Don't have an account? Sign up!
                 </Text>
             </TouchableOpacity>
+            <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+          {/* </ScrollView> */}
         </View>
     )
 }
@@ -140,5 +166,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white'
     }
-
 })

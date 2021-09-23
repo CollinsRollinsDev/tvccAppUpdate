@@ -6,6 +6,7 @@ export const SET_CURRENT_SCRIPTURE = "SET_CURRENT_SCRIPTURE";
 export const SET_CURRENT_TITLE = "SET_CURRENT_TITLE";
 export const SET_CURRENT_MINISTERING = "SET_CURRENT_MINISTERING";
 export const SET_CURRENT_POSTBODY = "SET_CURRENT_POSTBODY";
+export const SET_USER_DETAILS = "SET_USER_DETAILS";
 
 
 export let setCurrentBook = (payload) => (dispatch) => {
@@ -50,9 +51,18 @@ export let setCurrentMinistering = (payload) => (dispatch) => {
   });
 };
 
+ export let setUserDetails = (payload) => (dispatch) => {
+  dispatch({
+    type: SET_USER_DETAILS,
+    payload: payload,
+  });
+ };
+
 export let setCurrentPostBody = (payload) => (dispatch) => {
   dispatch({
     type: SET_CURRENT_POSTBODY,
     payload: payload,
   });
+
+
 };
