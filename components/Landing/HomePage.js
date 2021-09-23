@@ -14,19 +14,25 @@ import About from '../Landing/Nested/About'
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { useSelector, useDispatch } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 
 const HomePage = ({navigation}) => {
+
+  const { userDetails } =
+  useSelector((state) => state.useTheReducer);
     return (
         <View style={styles.body}>
             <View style={styles.upperContainer}>
+            <Text style={styles.welcome}>{userDetails.firstName} {userDetails.lastName}</Text>
               <View style={styles.churchText}>
                 <Text style={styles.churchName}>Truevine Christian Center</Text>
                 <Text style={styles.churchSlogan}>Mount of Grace and Glory</Text>
               </View>
            
               <View style={styles.imgView}>
+              
               <Image
                   style={styles.stretch}
                   source={require('../../assets/study.jpg')}
@@ -102,7 +108,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     flexDirection: 'column',
-    
+  },
+  welcome: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    marginLeft: '2%',
+    fontSize: 19,
+    color: 'white',
+    fontWeight: 'bold',
+    // zIndex: 1
   }
 
 })
