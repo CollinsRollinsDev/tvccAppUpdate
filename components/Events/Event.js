@@ -22,6 +22,7 @@ const Event = () => {
     const [hours, setHours] = useSafeState();
     const [days, setDays] = useSafeState();
 
+    
     function sortFunction(a,b){  
     var dateA = new Date(a.date).getTime();
     var dateB = new Date(b.date).getTime();
