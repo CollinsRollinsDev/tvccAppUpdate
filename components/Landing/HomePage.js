@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     position: 'absolute',
     marginLeft: '2%',
-    fontSize: 19,
+    fontSize: 17,
     color: 'white',
     fontWeight: 'bold',
     // zIndex: 1

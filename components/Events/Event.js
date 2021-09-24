@@ -13,22 +13,34 @@ import {
   ScrollView,
 } from "react-native";
 import Header from "../Header/Header";
-import events from "../../assets/events.json";
+// import events from "../../assets/events.json";
 const Event = () => {
+    const [events, setEvents] = useState();
 
-  // const [seconds, setSeconds] = useState();
-  //   const [minutes, setMinutes] = useState();
-  //   const [hours, setHours] = useState();
-  //   const [days, setDays] = useState()
-
-
-  let mappingEvent = events.map((event, index) => {
     const [seconds, setSeconds] = useSafeState();
     const [minutes, setMinutes] = useSafeState();
     const [hours, setHours] = useSafeState();
-    const [days, setDays] = useSafeState()
-    // if(index === 0){
-      let stoppageTime = new Date(`${event.date} ${event.time}`).getTime();
+    const [days, setDays] = useSafeState();
+
+    function sortFunction(a,b){  
+    var dateA = new Date(a.date).getTime();
+    var dateB = new Date(b.date).getTime();
+    return dateA > dateB ? 1 : -1;  
+}; 
+
+// const newEvents = events.sort(sortFunction);
+// console.log(newEvents)
+
+  let mappingEvent = events ? events.sort(sortFunction).map((event, index) => {
+ 
+    if(index === 0){
+      let stoppageTime = new Date(`${event.date} ${event.hour}:${event.minutes}:${event.seconds}`).getTime();
+
+      // create static countdown
+      let staticDateNow = new Date().getTime();
+      let remainingStaticTime = stoppageTime - staticDateNow;
+      let staticDays = Math.floor(remainingStaticTime / (1000 * 60 * 60 * 24));
+      // console.log(staticDays);
 
       // Using set interval to continuously get the time after each one seconds
       let theTime = setInterval(() => {
@@ -63,7 +75,7 @@ const Event = () => {
       </Text>
 
       <Text style={styles.parentText}>
-        Time: <Text style={styles.childText}>{event.time}</Text>
+        Time: <Text style={styles.childText}>{event.hour}:{event.minutes}:{event.seconds}</Text>
       </Text>
 
       <Text style={styles.parentText}>
@@ -82,41 +94,63 @@ const Event = () => {
         Countdown: <Text style={styles.countdownChild}>{days}d {hours}h {minutes}m {seconds}s </Text>
       </Text>
     </View>
-  
     )
       
-    // } else{
-    //   return (
-    //     <View key={index} style={styles.eventBox}>
-    //     <Text style={styles.parentText}>
-    //       Name: <Text style={styles.childText}>{event.name}</Text>
-    //     </Text>
+    } else{
 
-    //     <Text style={styles.parentText}>
-    //       Date: <Text style={styles.childText}>{event.date}</Text>
-    //     </Text>
+       let stoppageTime = new Date(`${event.date} ${event.hour}:${event.minutes}:${event.seconds}`).getTime();
 
-    //     <Text style={styles.parentText}>
-    //       Time: <Text style={styles.childText}>{event.time}</Text>
-    //     </Text>
+      // create static countdown
+      let staticDateNow = new Date().getTime();
+      let remainingStaticTime = stoppageTime - staticDateNow;
+      let staticDays = Math.floor(remainingStaticTime / (1000 * 60 * 60 * 24));
+      // console.log(staticDays);
 
-    //     <Text style={styles.parentText}>
-    //       Host: <Text style={styles.childText}>{event.host}</Text>
-    //     </Text>
+      return (
+        <View key={index} style={styles.eventBox}>
+        <Text style={styles.parentText}>
+          Name: <Text style={styles.childText}>{event.name}</Text>
+        </Text>
 
-    //     {/* <Text style={styles.parentText}>
-    //       Guests: <Text style={styles.childText}>Too Hot To Be Hurt!</Text>
-    //     </Text> */}
+        <Text style={styles.parentText}>
+          Date: <Text style={styles.childText}>{event.date}</Text>
+        </Text>
 
-    //     <Text style={styles.parentText}>
-    //       Description: <Text style={styles.childText}>{event.description}</Text>
-    //     </Text>
-    //   </View>
+        <Text style={styles.parentText}>
+          Time: <Text style={styles.childText}>{event.hour}:{event.minutes}:{event.seconds}</Text>
+        </Text>
+
+        <Text style={styles.parentText}>
+          Host: <Text style={styles.childText}>{event.host}</Text>
+        </Text>
+
+        {/* <Text style={styles.parentText}>
+          Guests: <Text style={styles.childText}>Too Hot To Be Hurt!</Text>
+        </Text> */}
+
+        <Text style={styles.parentText}>
+          Description: <Text style={styles.childText}>{event.description}</Text>
+        </Text>
+
+         <Text style={styles.countdown}>
+        Countdown: <Text style={styles.countdownChild}>{staticDays}days to event </Text>
+      </Text>
+      </View>
     
-    //   )
-    // }
+      )
+    }
   
-  })
+  }) : null
+
+  const getEvent = async() => {
+    const res = await fetch("http://10.2.213.237:8080/event");
+    const data = await res.json();
+    setEvents(data.response);
+  }
+
+  useEffect(() => {
+    getEvent();
+  }, [])
 
   return (
     <View style={styles.body}>
