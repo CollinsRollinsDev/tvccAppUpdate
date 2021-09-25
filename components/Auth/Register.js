@@ -52,8 +52,8 @@ const Register = ({navigation}) => {
     const handleSubmit = async() => {
         
         
-//    if(!firstName || !lastName || !phoneNumber || !userRole || userRole == '' || !emailAddress){
-    if(!firstName){
+   if(!firstName || !lastName || !phoneNumber || !userRole || userRole == '' || !emailAddress){
+    // if(!firstName){
     
     Alert.alert(
         `ERROR!!!`,
