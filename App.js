@@ -21,6 +21,7 @@ import Index from './components/Landing/Index';
 import Event from "./components/Events/Event.js";
 import Notes from "./components/Landing/Nested/Notes.js";
 import Register from "./components/Auth/Register.js";
+import AddEvent from "./components/Events/AddEvent.js";
 
 export default function App() {
   return (
@@ -34,7 +35,8 @@ export default function App() {
         {/* <ReadPage /> */}
         {/* <Event /> */}
         {/* <Notes /> */}
-        <Index />
+        <AddEvent />
+        {/* <Index /> */}
         {/* <Register /> */}
       </View>
     </Provider>

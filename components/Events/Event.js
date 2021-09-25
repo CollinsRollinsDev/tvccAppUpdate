@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import Header from "../Header/Header";
 // import events from "../../assets/events.json";
-const Event = () => {
+const Event = ({navigation}) => {
     const [events, setEvents] = useState();
 
     const [seconds, setSeconds] = useSafeState();
@@ -152,6 +152,11 @@ const Event = () => {
     getEvent();
   }, [])
 
+  const handleAddNote = () => {
+    //   console.log("working")
+    navigation.push("AddEvent")
+  }
+
   return (
     <View style={styles.body}>
       <Header name="Events" leftSide="search" />
@@ -161,6 +166,12 @@ const Event = () => {
       }
      </ScrollView>
      
+     <TouchableOpacity onPress={handleAddNote} style={styles.addBox}>
+            <Text style={styles.icon}>
+                add
+            </Text>
+      </TouchableOpacity>
+
     </View>
   );
 };
@@ -216,4 +227,20 @@ const styles = StyleSheet.create({
     textShadowColor: 'black',
     fontWeight: "bold",
   },
+  addBox: {
+    backgroundColor: 'blue',
+    height: 70,
+    width: 70,
+    borderRadius:70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: "80%",
+    right: '5%',
+  },
+  icon: {
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: 17,
+  }
 });

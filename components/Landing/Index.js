@@ -17,6 +17,7 @@ import HomePage from './HomePage';
 import Bible from "./Nested/Bible";
 import ReadPage from "../ReadBiblePage/ReadPage";
 import Event from "../Events/Event";
+import AddEvent from "../Events/AddEvent";
 import Notes from "./Nested/Notes";
 import Note from "./Nested/Note";
 import AddNote from './Nested/AddNote'
@@ -40,6 +41,7 @@ const Index = () => {
             <Stack.Screen name="Note" component={Note} options={{ headerShown: false }}/>
             <Stack.Screen name="AddNote" component={AddNote} options={{ headerShown: false }}/>
             <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
+            <Stack.Screen name="AddEvent" component={AddEvent} options={{ headerShown: false }}/>
         </Stack.Navigator>
     </NavigationContainer>
     
