@@ -1,6 +1,7 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import useSafeState from "react-use-safe-state";
+import { useSelector, useDispatch } from "react-redux";
 import {
   StyleSheet,
   Text,
@@ -16,11 +17,19 @@ import {
 import Header from "../Header/Header";
 // import events from "../../assets/events.json";
 const Event = ({navigation}) => {
+
+  const { userDetails } =
+  useSelector((state) => state.useTheReducer);
+
     const [events, setEvents] = useState();
     const [seconds, setSeconds] = useSafeState();
     const [minutes, setMinutes] = useSafeState();
     const [hours, setHours] = useSafeState();
     const [days, setDays] = useSafeState();
+    let [currentId, setCurrentId] = useState()
+    const [currentName, setCurrentName] = useState()
+    const [currentHost, setCurrentHost] = useState()
+    const [deletedBefore, setDeletedBefore] = useState(false)
 
     function sortFunction(a,b){  
     var dateA = new Date(a.date).getTime();
@@ -38,84 +47,125 @@ const Event = ({navigation}) => {
       );
     }
 
-    const autoDelete = async(id) => {
-      const res = await fetch("http://10.2.213.237:8080/event", {
-        body: JSON.stringify({
-          id: id,
-          }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "DELETE",
-      });
+    const autoDelete = async(id, name, host) => {
+     if(userDetails.accountType === "admin"){
 
-      const response = await res.json();
-      if(response){
-        navigation.push("Event")
-      }
-    }
-
-    const handleLongPressDelete = async(id) => {
-      console.log("first", id)
-      let proceed;
       Alert.alert(
-        `Warning!!!`,
-        `Are you sure you wish to delete this event?`,
+        `NOTIFICATION!`,
+        `The system detected an event named ${name} and hosted by ${host} that the time seems dued. Do you want this event removed from the database to clean up other user's interface?`,
         [
           {
             text: "No",
-            onPress: () => {
-              console.log("aborted!")
-            },
+            onPress: () => console.log("Cancel Pressed"),
             style: "cancel"
           },
           { text: "Yes", onPress: async() => {
-            
-        console.log(id)
-        const res = await fetch("http://10.2.213.237:8080/event", {
-          body: JSON.stringify({
-            id: id,
-            }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "DELETE",
-        });
-
-        const response = await res.json();
-
-        if(response.success === true){
-          Alert.alert(
-            `SUCCESSFUL!`,
-            `Event has been deleted.`,
-            [
-              { text: "OK", onPress: () => navigation.push("Event") }
-            ]
-          );
-
-         } else{
-           console.log("already ran")
-          Alert.alert(
-            `ERROR!`,
-            `Something went wrong!.`,
-            [
-              { text: "OK", onPress: () => console.log("err") }
-            ]
-          );
-
-        }
-
-
-          } }
+            const res = await fetch("http://10.2.213.237:8080/event", {
+              body: JSON.stringify({
+                id: id,
+                }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "DELETE",
+            });
+      
+            const response = await res.json();
+            if(response){
+              navigation.push("Event")
+            }
+          }}
         ]
-      );
+      )
+     }
+    }
 
+
+    useMemo(() => {
+      if(!deletedBefore){
+        if(currentName && currentHost && currentId){
+          if(hours < 0){
+            autoDelete(currentId, currentName, currentHost)
+            setDeletedBefore(true)
+          }
+        }
+      } 
+    }, [hours, currentName, currentHost])
+
+
+    const handleLongPressDelete = async(id) => {
+
+      if(userDetails.accountType === "admin"){
+        Alert.alert(
+          `Warning!!!`,
+          `Are you sure you wish to delete this event?`,
+          [
+            {
+              text: "No",
+              onPress: () => {
+                console.log("aborted!")
+              },
+              style: "cancel"
+            },
+            { text: "Yes", onPress: async() => {
+              
+          console.log(id)
+          const res = await fetch("http://10.2.213.237:8080/event", {
+            body: JSON.stringify({
+              id: id,
+              }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "DELETE",
+          });
+  
+          const response = await res.json();
+  
+          if(response.success === true){
+            Alert.alert(
+              `SUCCESSFUL!`,
+              `Event has been deleted.`,
+              [
+                { text: "OK", onPress: () => navigation.push("Event") }
+              ]
+            );
+  
+           } else{
+             console.log("already ran")
+            Alert.alert(
+              `ERROR!`,
+              `Something went wrong!.`,
+              [
+                { text: "OK", onPress: () => console.log("err") }
+              ]
+            );
+  
+          }
+  
+            } }
+          ]
+        );
+  
+      } else{
+        Alert.alert(
+          `NOT AUTHORIZED!`,
+          `Sorry, you are not authorized to access this feature.`,
+          [
+            { text: "OK", onPress: () => null}
+          ]
+        );
+
+      }
+    
     }
 
   let mappingEvent = events ? events.sort(sortFunction).map((event, index) => {
- 
+
     if(index === 0){
       let stoppageTime = new Date(`${event.date} ${event.hour}:${event.minutes}:${event.seconds}`).getTime();
+
+      
 
       // create static countdown
       let staticDateNow = new Date().getTime();
@@ -142,12 +192,20 @@ const Event = ({navigation}) => {
         setHours(hours);
         setDays(days);
 
-        if(hours < 0){
-          autoDelete(event._id);
-        }
+
+      setCurrentId(currentId = event._id)
+      setCurrentName(event.name)
+      setCurrentHost(event.host)
+
+
+        
         // clear interval if time is up
         remainingTime < 0 ? clearInterval(theTime) : null;
       }, 1000);
+
+      // if(hours < 0){
+      //   autoDelete(event._id, event.name, event.host);
+      // }
 
     return (
       <TouchableOpacity
@@ -282,12 +340,14 @@ const Event = ({navigation}) => {
         mappingEvent
       }
      </ScrollView>
-     
-     <TouchableOpacity onPress={handleAddNote} style={styles.addBox}>
-            <Text style={styles.icon}>
-                add
-            </Text>
-      </TouchableOpacity>
+    {
+      userDetails.accountType === "admin" ?  
+      <TouchableOpacity onPress={handleAddNote} style={styles.addBox}>
+             <Text style={styles.icon}>
+                 add
+             </Text>
+       </TouchableOpacity> : null
+    }
 
     </View>
   );
