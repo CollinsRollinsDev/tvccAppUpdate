@@ -16,11 +16,12 @@ import {
   FlatList,
   TouchableOpacity,
   LogBox,
+  Alert
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
  
 
-const AddEvent = () => {
+const AddEvent = ({navigation}) => {
 const { currentTitle, currentPostBody, currentMinistering} =
     useSelector((state) => state.useTheReducer);
 
@@ -47,12 +48,6 @@ const { currentTitle, currentPostBody, currentMinistering} =
   }, []);
 
   const handleChapterPress = async (event) => {};
-  const handleSave = async() => {
-      // console.log("working")
-      await setDate(`${month} ${day}, ${year}`);
-
-  }
-
 
   const formatter1 = async() => {
     if(hour == "00"){
@@ -80,6 +75,53 @@ useEffect(() => {
     }
      
   }, [format])
+
+  useEffect(() => {
+    setDate(`${month} ${day}, ${year}`)
+  }, [month, day, year])
+
+  const handleSave = async() => {
+    // console.log("working")
+    await setDate(`${month} ${day}, ${year}`);
+     const res = await fetch("http://10.2.213.237:8080/event", {
+         body: JSON.stringify({
+           name: name,
+           host: host,
+           description: description,
+           date: date,
+           hour: hour,
+           minutes: minutes,
+           seconds: seconds
+         }),
+         headers: {
+           "Content-Type": "application/json",
+         },
+         method: "POST",
+       });
+
+       const result = await res.json();
+       if(result.success == true){
+        Alert.alert(
+        `Event Created!`,
+        `Event with name "${name}" to host on ${date} at ${hour}:${minutes} has been created successfully.`,
+    [
+        { text: "OK", onPress: () => 
+        navigation.push("Event") 
+        
+      }
+    ]
+        );
+} else{
+             Alert.alert(
+            `UNSUCCESSFUL!!!`,
+            `Something went wrong`,
+            [
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+        );
+}
+   
+}
 
   return (
     <View style={styles.body}>
@@ -118,7 +160,7 @@ useEffect(() => {
 
                     </Picker>
                 </View>
-                        <Text style={styles.columnFeel} >:</Text>
+                        {/* <Text style={styles.columnFeel} >:</Text> */}
                     <View style={styles.roleBox}>
                         <Picker
                         style={styles.role}
@@ -144,7 +186,7 @@ useEffect(() => {
                     </Picker>
                 </View>
                 
-                <Text style={styles.columnFeel} >:</Text>
+                {/* <Text style={styles.columnFeel} >:</Text> */}
 
                 <View style={styles.roleBox}>
                         <Picker
@@ -261,12 +303,14 @@ useEffect(() => {
 
 
         </View>
-        </ScrollView>
-
 
         <TouchableOpacity onPress={handleSave} style={styles.saveBtn}>
             <Text style={styles.content}>Save Event</Text>
         </TouchableOpacity>
+        </ScrollView>
+
+
+        
     </View>
   );
 };
@@ -289,15 +333,16 @@ const styles = StyleSheet.create({
   containerFlex:{
     justifyContent: 'space-around',
     alignItems: 'center',
-    flexDirection: 'row',
+    // flexDirection: 'row',
     minHeight: 50
   },
   roleBox: {
     backgroundColor: 'white',
     borderRadius: 10,
-    width: '20%',
+    width: '80%',
     minHeight: 40,
     margin: 10,
+    // marginLeft: '10%',
     justifyContent: 'center',
     marginTop: 40,
     // alignItems: 'center'
@@ -321,13 +366,12 @@ role: {
   saveBtn: {
     backgroundColor: 'blue',
     height: 40,
-    width: 130,
+    width: '40%',
     borderRadius:20,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    top: "90%",
-    right: '5%',
+    marginTop: 20,
+    marginLeft: '30%',
 },
 content: {
     color: 'white',

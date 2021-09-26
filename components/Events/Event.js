@@ -11,12 +11,12 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import Header from "../Header/Header";
 // import events from "../../assets/events.json";
 const Event = ({navigation}) => {
     const [events, setEvents] = useState();
-
     const [seconds, setSeconds] = useSafeState();
     const [minutes, setMinutes] = useSafeState();
     const [hours, setHours] = useSafeState();
@@ -28,8 +28,89 @@ const Event = ({navigation}) => {
     return dateA > dateB ? 1 : -1;  
 }; 
 
-// const newEvents = events.sort(sortFunction);
-// console.log(newEvents)
+    const handleLongPressUpdate = async(id) => {
+      Alert.alert(
+        `Message!`,
+        `Sorry, this feature is not yet avaliable. However, you can delete an event and recreate a new one.`,
+        [
+          { text: "OK", onPress: () => console.log("err") }
+        ]
+      );
+    }
+
+    const autoDelete = async(id) => {
+      const res = await fetch("http://10.2.213.237:8080/event", {
+        body: JSON.stringify({
+          id: id,
+          }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "DELETE",
+      });
+
+      const response = await res.json();
+      if(response){
+        navigation.push("Event")
+      }
+    }
+
+    const handleLongPressDelete = async(id) => {
+      console.log("first", id)
+      let proceed;
+      Alert.alert(
+        `Warning!!!`,
+        `Are you sure you wish to delete this event?`,
+        [
+          {
+            text: "No",
+            onPress: () => {
+              console.log("aborted!")
+            },
+            style: "cancel"
+          },
+          { text: "Yes", onPress: async() => {
+            
+        console.log(id)
+        const res = await fetch("http://10.2.213.237:8080/event", {
+          body: JSON.stringify({
+            id: id,
+            }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "DELETE",
+        });
+
+        const response = await res.json();
+
+        if(response.success === true){
+          Alert.alert(
+            `SUCCESSFUL!`,
+            `Event has been deleted.`,
+            [
+              { text: "OK", onPress: () => navigation.push("Event") }
+            ]
+          );
+
+         } else{
+           console.log("already ran")
+          Alert.alert(
+            `ERROR!`,
+            `Something went wrong!.`,
+            [
+              { text: "OK", onPress: () => console.log("err") }
+            ]
+          );
+
+        }
+
+
+          } }
+        ]
+      );
+
+    }
 
   let mappingEvent = events ? events.sort(sortFunction).map((event, index) => {
  
@@ -60,12 +141,32 @@ const Event = ({navigation}) => {
         setMinutes(minutes);
         setHours(hours);
         setDays(days);
+
+        if(hours < 0){
+          autoDelete(event._id);
+        }
         // clear interval if time is up
         remainingTime < 0 ? clearInterval(theTime) : null;
       }, 1000);
 
     return (
-      <View key={index} style={styles.eventBox}>
+      <TouchableOpacity
+      onLongPress={() => {
+        Alert.alert(
+          `Hello,`,
+          `What do you wish to do?`,
+          [
+            {
+              text: "Update Event",
+              onPress: () => handleLongPressUpdate(event.id),
+              style: "cancel"
+            },
+            { text: "Delete Event", onPress: () => handleLongPressDelete(event._id
+              ) }
+          ]
+        );
+      }}
+       key={index} style={styles.eventBox}>
       <Text style={styles.parentText}>
         Name: <Text style={styles.childText}>{event.name}</Text>
       </Text>
@@ -93,7 +194,7 @@ const Event = ({navigation}) => {
       <Text style={styles.countdown}>
         Countdown: <Text style={styles.countdownChild}>{days}d {hours}h {minutes}m {seconds}s </Text>
       </Text>
-    </View>
+    </TouchableOpacity>
     )
       
     } else{
@@ -107,7 +208,23 @@ const Event = ({navigation}) => {
       // console.log(staticDays);
 
       return (
-        <View key={index} style={styles.eventBox}>
+        <TouchableOpacity
+        onLongPress={() => {
+          Alert.alert(
+            `Hello,`,
+            `What do you wish to do?`,
+            [
+              {
+                text: "Update Event",
+                onPress: () => handleLongPressUpdate(event.id),
+                style: "cancel"
+              },
+              { text: "Delete Event", onPress: () => handleLongPressDelete(event._id
+                ) }
+            ]
+          );
+        }}
+        key={index} style={styles.eventBox}>
         <Text style={styles.parentText}>
           Name: <Text style={styles.childText}>{event.name}</Text>
         </Text>
@@ -135,7 +252,7 @@ const Event = ({navigation}) => {
          <Text style={styles.countdown}>
         Countdown: <Text style={styles.countdownChild}>{staticDays}days to event </Text>
       </Text>
-      </View>
+      </TouchableOpacity>
     
       )
     }
@@ -188,6 +305,11 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+  },
+  test:{
+    fontSize: 30,
+    color: 'red',
+    position: 'absolute'
   },
   eventBox: {
     minHeight: 250,

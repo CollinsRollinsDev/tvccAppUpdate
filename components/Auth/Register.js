@@ -103,7 +103,7 @@ const Register = ({navigation}) => {
        });
    
        const result = await res.json();
-        
+           
        Alert.alert(
         `CONGRATULATIONS!!!`,
         `${JSON.stringify(result.message)}`,
@@ -117,7 +117,6 @@ const Register = ({navigation}) => {
        } else{
         setBtnMsg("Sign Up")
        }
-       // location.reload();
     }
 }
     }

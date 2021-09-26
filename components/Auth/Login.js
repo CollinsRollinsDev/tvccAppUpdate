@@ -101,7 +101,8 @@ const Login = ({navigation}) => {
             {/* <ScrollView> */}
             <Text style={styles.info}> Please, Login below</Text>
             <TextInput onChangeText={(e) => setEmailAddress(e)} style={styles.input} placeholder="email address" />
-            <TextInput onChangeText={(e) => setPassword(e)}  style={styles.input}  placeholder="password"/>
+            <TextInput  secureTextEntry
+           autoCorrect={false} onChangeText={(e) => setPassword(e)}  style={styles.input}  placeholder="password"/>
             <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
                     <Text style={styles.btnText}>{btnMsg}</Text>
                 </TouchableOpacity>

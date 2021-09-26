@@ -35,8 +35,8 @@ export default function App() {
         {/* <ReadPage /> */}
         {/* <Event /> */}
         {/* <Notes /> */}
-        <AddEvent />
-        {/* <Index /> */}
+        {/* <AddEvent /> */}
+        <Index />
         {/* <Register /> */}
       </View>
     </Provider>
