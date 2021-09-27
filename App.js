@@ -17,7 +17,7 @@ import Bible from "./components/Landing/Nested/Bible.js";
 import ReadPage from "./components/ReadBiblePage/ReadPage.js";
 import { Provider } from "react-redux";
 import { Store } from "./reduxStore/store.js";
-import Index from './components/Landing/Index';
+import Index from "./components/Landing/Index";
 import Event from "./components/Events/Event.js";
 import Notes from "./components/Landing/Nested/Notes.js";
 import Register from "./components/Auth/Register.js";
