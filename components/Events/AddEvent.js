@@ -93,16 +93,10 @@ useEffect(() => {
   }, [month, day, year])
 
   const handleSave = async() => {
-    // let array = await 
-    // let proceed;
-    setDate(`${month} ${day}, ${year}`)
-  const auth = await userDetails.userDepartment.filter(user => {
-        return user.deptName === allowViewsBy;
-    })
-console.log("waiting for",auth)
-    if(auth.length != 0){
-        if(auth[0].exco === true){
-          const res = await fetch("http://10.2.213.237:8080/event", {
+
+    if(allowViewsBy == "all" || allowViewsBy == "worker"){
+      if(userDetails.accountType === "admin"){
+        const res = await fetch("http://10.2.213.237:8080/event", {
           body: JSON.stringify({
             name: name,
             host: host,
@@ -136,7 +130,6 @@ console.log("waiting for",auth)
      ]
          );
       } else{
-   console.log("else");
               Alert.alert(
              `UNSUCCESSFUL!!!`,
              `Something went wrong`,
@@ -145,27 +138,91 @@ console.log("waiting for",auth)
              ]
          );
  }
-        } else{
-        // You can not create event here as you are not an exco
-          Alert.alert(
-            `UNAUTHORIZED!!!`,
-            `You can only create an event in this group if you are part of the exco`,
-            [
-            { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-        );
-  
-        }
-      
-    } else{
-        // Oops! You dont belong to this group
+
+      } else{
         Alert.alert(
-          `ERROR!!!`,
-          `Opps! You do not belong to this group`,
+          `UNSUCCESSFUL!!!`,
+          `Only admin can create this type of event for now!`,
           [
           { text: "OK", onPress: () => console.log("OK Pressed") }
           ]
       );
+      }
+    } else{
+
+      setDate(`${month} ${day}, ${year}`)
+      const auth = await userDetails.userDepartment.filter(user => {
+            return user.deptName === allowViewsBy;
+        })
+    console.log("waiting for",auth)
+        if(auth.length != 0){
+            if(auth[0].exco === true){
+              const res = await fetch("http://10.2.213.237:8080/event", {
+              body: JSON.stringify({
+                name: name,
+                host: host,
+                description: description,
+                date: date,
+                hour: hour,
+                minutes: minutes,
+                seconds: seconds,
+                poster: poster,
+                allowViewsBy: allowViewsBy,
+                leaderAccess: leaderAccess
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "POST",
+            });
+     
+              console.log("two")
+    
+            const result = await res.json();
+            if(result.success == true){
+             Alert.alert(
+             `Event Created!`,
+             `Event with name "${name}" to host on ${date} at ${hour}:${minutes} has been created successfully.`,
+         [
+             { text: "OK", onPress: () => 
+             navigation.push("Event") 
+             
+           }
+         ]
+             );
+          } else{
+       console.log("else");
+                  Alert.alert(
+                 `UNSUCCESSFUL!!!`,
+                 `Something went wrong`,
+                 [
+                 { text: "OK", onPress: () => console.log("OK Pressed") }
+                 ]
+             );
+     }
+            } else{
+            // You can not create event here as you are not an exco
+              Alert.alert(
+                `UNAUTHORIZED!!!`,
+                `You can only create an event in this group if you are part of the exco`,
+                [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+            );
+      
+            }
+          
+        } else{
+            // Oops! You dont belong to this group
+            Alert.alert(
+              `ERROR!!!`,
+              `Opps! You do not belong to this group`,
+              [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+              ]
+          );
+        }
+
     }
    
 }

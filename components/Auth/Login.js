@@ -36,7 +36,6 @@ const Login = ({navigation}) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
       }
       
-
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
@@ -98,7 +97,15 @@ const Login = ({navigation}) => {
 
     return (
         <View style={styles.body}>
-            {/* <ScrollView> */}
+            {/* <ScrollView
+                refreshControl={
+                    <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
+            >
+             */}
             <Text style={styles.info}> Please, Login below</Text>
             <TextInput onChangeText={(e) => setEmailAddress(e)} style={styles.input} placeholder="email address" />
             <TextInput  secureTextEntry
@@ -108,13 +115,13 @@ const Login = ({navigation}) => {
                 </TouchableOpacity>
                       <TouchableOpacity onPress={() => navigation.push("Register")} style={styles.alt}>
                 <Text style={styles.altClick}>
-                Don't have an account? Sign up!
+                Don't have an account? Sign!
                 </Text>
             </TouchableOpacity>
-            <RefreshControl
+            {/* <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-          />
+          /> */}
           {/* </ScrollView> */}
         </View>
     )

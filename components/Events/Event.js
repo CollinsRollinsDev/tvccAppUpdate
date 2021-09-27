@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import useSafeState from "react-use-safe-state";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -13,10 +13,23 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  RefreshControl,
+
 } from "react-native";
 import Header from "../Header/Header";
 // import events from "../../assets/events.json";
 const Event = ({navigation}) => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+  
+const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
 
   const { userDetails } =
   useSelector((state) => state.useTheReducer);
@@ -71,7 +84,7 @@ const Event = ({navigation}) => {
       
             const response = await res.json();
             if(response){
-              navigation.push("Event")
+              // navigation.push("Event")
             }
           }}
         ]
@@ -126,7 +139,9 @@ const Event = ({navigation}) => {
               `SUCCESSFUL!`,
               `Event has been deleted.`,
               [
-                { text: "OK", onPress: () => navigation.push("Event") }
+                { text: "OK", onPress: () => {
+                  // navigation.push("Event")
+                } }
               ]
             );
   
@@ -354,7 +369,15 @@ const Event = ({navigation}) => {
   return (
     <View style={styles.body}>
       <Header name="Events" leftSide="search" />
-     <ScrollView>
+     <ScrollView
+          refreshControl={
+            <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+          }
+     >
+
      {
         mappingEvent
       }
