@@ -38,8 +38,14 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
       lastName: userDetails.lastName,
       id: userDetails.id
     });
+    const [leaderAccess, setLeaderAccess] = useState();
 
-    console.log(date)
+
+    useEffect(() => {
+    setLeaderAccess(allowViewsBy === "ministers_department" ? "ministers_leader" : allowViewsBy === "choir_department" ? "choir_leader" : allowViewsBy === "ushering_department" ? "usher_leader" : allowViewsBy === "media_department" ? "media_leader" : null)
+    }, [allowViewsBy])
+
+    console.log(leaderAccess)
 
     let [hour, setHour] = useState("00")
     const [minutes, setMinutes] = useState("00")
@@ -47,7 +53,6 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
     let [format, setFormat] = useState("AM")
     const [description, setDescription] = useState()
 
-    console.log(`time is: ${hour}h ${minutes}m ${seconds}s`)
 
 
   useEffect(() => {
@@ -100,7 +105,8 @@ useEffect(() => {
            minutes: minutes,
            seconds: seconds,
            poster: poster,
-           allowViewsBy: allowViewsBy
+           allowViewsBy: allowViewsBy,
+           leaderAccess: leaderAccess
          }),
          headers: {
            "Content-Type": "application/json",

@@ -49,8 +49,6 @@ const Event = ({navigation}) => {
     }
 
     const autoDelete = async(id, name, host) => {
-     if(userDetails.accountType === "admin"){
-
       Alert.alert(
         `NOTIFICATION!`,
         `The system detected an event named ${name} and hosted by ${host} that the time seems dued. Do you want this event removed from the database to clean up other user's interface?`,
@@ -78,7 +76,6 @@ const Event = ({navigation}) => {
           }}
         ]
       )
-     }
     }
 
     useMemo(() => {
@@ -95,9 +92,9 @@ const Event = ({navigation}) => {
     }, [hours, currentName, currentHost])
 
 
-    const handleLongPressDelete = async(id, posterId) => {
+    const handleLongPressDelete = async(id, posterId, leaderAccess) => {
 
-      if(userDetails.accountType === "admin" || posterId === userDetails.id){
+      if(userDetails.accountType === "admin" || posterId === userDetails.id || userDetails.excoType.includes(leaderAccess)){
         Alert.alert(
           `Warning!!!`,
           `Are you sure you wish to delete this event?`,
@@ -222,10 +219,10 @@ const Event = ({navigation}) => {
         [
           {
             text: "Update Event",
-            onPress: () => handleLongPressUpdate(event.id, event.poster.id),
+            onPress: () => handleLongPressUpdate(event.id, event.poster.id, event.leaderAccess),
             style: "cancel"
           },
-          { text: "Delete Event", onPress: () => handleLongPressDelete(event._id, event.poster.id) }
+          { text: "Delete Event", onPress: () => handleLongPressDelete(event._id, event.poster.id, event.leaderAccess) }
         ]
       );
     }}
@@ -246,13 +243,13 @@ const Event = ({navigation}) => {
       Host: <Text style={styles.childText}>{event.host}</Text>
     </Text>
 
-    {/* <Text style={styles.parentText}>
-      Guests: <Text style={styles.childText}></Text>
-    </Text> */}
-
     <Text style={styles.parentText}>
       Description: <Text style={styles.childText}>{event.description}</Text>
     </Text>
+
+    <Text style={styles.parentText}>
+        Posted by: <Text style={styles.childText}>{event.poster.firstName} {event.poster.lastName}</Text>
+      </Text>
 
     <Text style={styles.countdown}>
       Countdown: <Text style={styles.countdownChild}>{days}d {hours}h {minutes}m {seconds}s </Text>
@@ -262,7 +259,7 @@ const Event = ({navigation}) => {
 
 
     return (
-      event.allowViewsBy == userDetails.userDepartment[0] ?  displayingEvent : event.allowViewsBy == userDetails.userRole ? displayingEvent : event.allowViewsBy == "all" ? displayingEvent : null
+        event.allowViewsBy == "all" ? displayingEvent : event.allowViewsBy == userDetails.userDepartment[0] ?  displayingEvent : event.allowViewsBy == userDetails.userRole ? displayingEvent : null
 
     )
       
@@ -285,10 +282,10 @@ const Event = ({navigation}) => {
           [
             {
               text: "Update Event",
-              onPress: () => handleLongPressUpdate(event.id, event.poster.id),
+              onPress: () => handleLongPressUpdate(event.id, event.poster.id, event.leaderAccess),
               style: "cancel"
             },
-            { text: "Delete Event", onPress: () => handleLongPressDelete(event._id, event.poster.id) }
+            { text: "Delete Event", onPress: () => handleLongPressDelete(event._id, event.poster.id, event.leaderAccess) }
           ]
         );
       }}
@@ -309,12 +306,12 @@ const Event = ({navigation}) => {
         Host: <Text style={styles.childText}>{event.host}</Text>
       </Text>
 
-      {/* <Text style={styles.parentText}>
-        Guests: <Text style={styles.childText}>Too Hot To Be Hurt!</Text>
-      </Text> */}
-
       <Text style={styles.parentText}>
         Description: <Text style={styles.childText}>{event.description}</Text>
+      </Text>
+
+      <Text style={styles.parentText}>
+        Posted by: <Text style={styles.childText}>{event.poster.firstName} {event.poster.lastName}</Text>
       </Text>
 
        <Text style={styles.countdown}>
@@ -324,7 +321,7 @@ const Event = ({navigation}) => {
   
 
       return (
-        event.allowViewsBy == userDetails.userDepartment[0] ?  displayStaticEvent : event.allowViewsBy == userDetails.userRole ? displayStaticEvent : event.allowViewsBy == "all" ? displayStaticEvent : null
+         userDetails.userDepartment.includes(event.allowViewsBy) ?  displayStaticEvent : event.allowViewsBy == userDetails.userRole ? displayStaticEvent : event.allowViewsBy == "all" ? displayStaticEvent : null
       )
     }
   
@@ -354,7 +351,7 @@ const Event = ({navigation}) => {
       }
      </ScrollView>
     {
-      userDetails.accountType === "admin" ?  
+      userDetails.accountType === "admin" || userDetails.excoType.length != 0  ?  
       <TouchableOpacity onPress={handleAddNote} style={styles.addBox}>
              <Text style={styles.icon}>
                  add
@@ -424,13 +421,13 @@ const styles = StyleSheet.create({
   },
   addBox: {
     backgroundColor: 'blue',
-    height: 70,
-    width: 70,
-    borderRadius:70,
+    height: 60,
+    width: 60,
+    borderRadius:60,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: "80%",
+    top: "95%",
     right: '5%',
   },
   icon: {
