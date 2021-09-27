@@ -80,7 +80,6 @@ const Event = ({navigation}) => {
      }
     }
 
-
     useMemo(() => {
       if(!deletedBefore){
         if(currentName && currentHost && currentId){
@@ -160,6 +159,8 @@ const Event = ({navigation}) => {
     
     }
 
+// console.log(userDetails)
+
   let mappingEvent = events ? events.sort(sortFunction).map((event, index) => {
 
     if(index === 0){
@@ -207,8 +208,72 @@ const Event = ({navigation}) => {
       //   autoDelete(event._id, event.name, event.host);
       // }
 
+      
+
+    const displayingEvent = <TouchableOpacity
+    onLongPress={() => {
+      Alert.alert(
+        `Hello,`,
+        `What do you wish to do?`,
+        [
+          {
+            text: "Update Event",
+            onPress: () => handleLongPressUpdate(event.id),
+            style: "cancel"
+          },
+          { text: "Delete Event", onPress: () => handleLongPressDelete(event._id
+            ) }
+        ]
+      );
+    }}
+     key={event._id} style={styles.eventBox}>
+    <Text style={styles.parentText}>
+      Name: <Text style={styles.childText}>{event.name}</Text>
+    </Text>
+
+    <Text style={styles.parentText}>
+      Date: <Text style={styles.childText}>{event.date}</Text>
+    </Text>
+
+    <Text style={styles.parentText}>
+      Time: <Text style={styles.childText}>{event.hour}:{event.minutes}:{event.seconds}</Text>
+    </Text>
+
+    <Text style={styles.parentText}>
+      Host: <Text style={styles.childText}>{event.host}</Text>
+    </Text>
+
+    {/* <Text style={styles.parentText}>
+      Guests: <Text style={styles.childText}></Text>
+    </Text> */}
+
+    <Text style={styles.parentText}>
+      Description: <Text style={styles.childText}>{event.description}</Text>
+    </Text>
+
+    <Text style={styles.countdown}>
+      Countdown: <Text style={styles.countdownChild}>{days}d {hours}h {minutes}m {seconds}s </Text>
+    </Text>
+  </TouchableOpacity>
+
+
+
     return (
-      <TouchableOpacity
+      event.allowViewsBy == userDetails.userDepartment[0] ?  displayingEvent : event.allowViewsBy == userDetails.userRole ? displayingEvent : event.allowViewsBy == "all" ? displayingEvent : null
+
+    )
+      
+    } else{
+
+       let stoppageTime = new Date(`${event.date} ${event.hour}:${event.minutes}:${event.seconds}`).getTime();
+
+      // create static countdown
+      let staticDateNow = new Date().getTime();
+      let remainingStaticTime = stoppageTime - staticDateNow;
+      let staticDays = Math.floor(remainingStaticTime / (1000 * 60 * 60 * 24));
+      // console.log(staticDays);
+
+      const displayStaticEvent =  <TouchableOpacity
       onLongPress={() => {
         Alert.alert(
           `Hello,`,
@@ -224,7 +289,7 @@ const Event = ({navigation}) => {
           ]
         );
       }}
-       key={index} style={styles.eventBox}>
+      key={index} style={styles.eventBox}>
       <Text style={styles.parentText}>
         Name: <Text style={styles.childText}>{event.name}</Text>
       </Text>
@@ -242,76 +307,21 @@ const Event = ({navigation}) => {
       </Text>
 
       {/* <Text style={styles.parentText}>
-        Guests: <Text style={styles.childText}></Text>
+        Guests: <Text style={styles.childText}>Too Hot To Be Hurt!</Text>
       </Text> */}
 
       <Text style={styles.parentText}>
         Description: <Text style={styles.childText}>{event.description}</Text>
       </Text>
 
-      <Text style={styles.countdown}>
-        Countdown: <Text style={styles.countdownChild}>{days}d {hours}h {minutes}m {seconds}s </Text>
-      </Text>
+       <Text style={styles.countdown}>
+      Countdown: <Text style={styles.countdownChild}>{staticDays}days to event </Text>
+    </Text>
     </TouchableOpacity>
-    )
-      
-    } else{
-
-       let stoppageTime = new Date(`${event.date} ${event.hour}:${event.minutes}:${event.seconds}`).getTime();
-
-      // create static countdown
-      let staticDateNow = new Date().getTime();
-      let remainingStaticTime = stoppageTime - staticDateNow;
-      let staticDays = Math.floor(remainingStaticTime / (1000 * 60 * 60 * 24));
-      // console.log(staticDays);
+  
 
       return (
-        <TouchableOpacity
-        onLongPress={() => {
-          Alert.alert(
-            `Hello,`,
-            `What do you wish to do?`,
-            [
-              {
-                text: "Update Event",
-                onPress: () => handleLongPressUpdate(event.id),
-                style: "cancel"
-              },
-              { text: "Delete Event", onPress: () => handleLongPressDelete(event._id
-                ) }
-            ]
-          );
-        }}
-        key={index} style={styles.eventBox}>
-        <Text style={styles.parentText}>
-          Name: <Text style={styles.childText}>{event.name}</Text>
-        </Text>
-
-        <Text style={styles.parentText}>
-          Date: <Text style={styles.childText}>{event.date}</Text>
-        </Text>
-
-        <Text style={styles.parentText}>
-          Time: <Text style={styles.childText}>{event.hour}:{event.minutes}:{event.seconds}</Text>
-        </Text>
-
-        <Text style={styles.parentText}>
-          Host: <Text style={styles.childText}>{event.host}</Text>
-        </Text>
-
-        {/* <Text style={styles.parentText}>
-          Guests: <Text style={styles.childText}>Too Hot To Be Hurt!</Text>
-        </Text> */}
-
-        <Text style={styles.parentText}>
-          Description: <Text style={styles.childText}>{event.description}</Text>
-        </Text>
-
-         <Text style={styles.countdown}>
-        Countdown: <Text style={styles.countdownChild}>{staticDays}days to event </Text>
-      </Text>
-      </TouchableOpacity>
-    
+        event.allowViewsBy == userDetails.userDepartment[0] ?  displayStaticEvent : event.allowViewsBy == userDetails.userRole ? displayStaticEvent : event.allowViewsBy == "all" ? displayStaticEvent : null
       )
     }
   

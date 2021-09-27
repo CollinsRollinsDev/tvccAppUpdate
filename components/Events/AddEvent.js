@@ -23,7 +23,7 @@ import { useSelector, useDispatch } from "react-redux";
  
 
 const AddEvent = ({navigation}) => {
-const { currentTitle, currentPostBody, currentMinistering} =
+const { currentTitle, currentPostBody, currentMinistering, userDetails} =
     useSelector((state) => state.useTheReducer);
 
     const [name, setName] = useState()
@@ -32,6 +32,12 @@ const { currentTitle, currentPostBody, currentMinistering} =
     const [day, setDay] = useState("1")
     const [month, setMonth] = useState("Jan")
     const [year, setYear] = useState("2021")
+    const [allowViewsBy, setAllowViewsBy] = useState('all');
+    const [poster, setPoster] = useState({
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+      id: userDetails.id
+    });
 
     console.log(date)
 
@@ -92,7 +98,9 @@ useEffect(() => {
            date: date,
            hour: hour,
            minutes: minutes,
-           seconds: seconds
+           seconds: seconds,
+           poster: poster,
+           allowViewsBy: allowViewsBy
          }),
          headers: {
            "Content-Type": "application/json",
@@ -300,6 +308,28 @@ useEffect(() => {
                     </Picker>
                 </View>
             </View>
+
+            {/* allowViewsBy */}
+              <View style={styles.roleBoxOut}>
+                        <Picker
+                        style={styles.role}
+                        selectedValue={allowViewsBy}
+                        onValueChange={(itemValue, itemIndex) => {
+                          setAllowViewsBy(itemValue);
+                          // handleSwitch(itemValue)
+                        }
+                        }
+                    >
+                        <Picker.Item label="Choose who will see this event?" value="" />
+                        <Picker.Item label="All" value="all" />
+                        <Picker.Item label="Workers" value="worker" />
+                        <Picker.Item label="All Ministers" value="ministers_department" />
+                        <Picker.Item label="All Choiristers" value="choir_department" />
+                        <Picker.Item label="All Ushers" value="ushering_department" />
+                        <Picker.Item label="All Media Team Members" value="media_department" />
+
+                    </Picker>
+                </View>
           
 
 
@@ -347,6 +377,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 40,
     // alignItems: 'center'
+},
+roleBoxOut: {
+  backgroundColor: 'white',
+  borderRadius: 10,
+  width: '80%',
+  minHeight: 40,
+  margin: 10,
+  marginLeft: '10%',
+  justifyContent: 'center',
+  marginTop: 40,
+  // alignItems: 'center'
 },
 role: {
     textAlign: 'center',

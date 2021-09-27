@@ -44,7 +44,7 @@ const Register = ({navigation}) => {
                         <Picker.Item label="Ministers Department" value="ministers_department" />
                         <Picker.Item label="Ushering Department" value="ushering_department" />
                         <Picker.Item label="Choir Department" value="choir_department" />
-                        <Picker.Item label="Media Department" value="ushering_department" />
+                        <Picker.Item label="Media Department" value="media_department" />
                     </Picker>
                 </View> : null
 
