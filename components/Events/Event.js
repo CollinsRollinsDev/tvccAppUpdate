@@ -29,6 +29,7 @@ const Event = ({navigation}) => {
     let [currentId, setCurrentId] = useState()
     const [currentName, setCurrentName] = useState()
     const [currentHost, setCurrentHost] = useState()
+    const [posterId, setPosterId] = useState()
     const [deletedBefore, setDeletedBefore] = useState(false)
 
     function sortFunction(a,b){  
@@ -82,19 +83,21 @@ const Event = ({navigation}) => {
 
     useMemo(() => {
       if(!deletedBefore){
-        if(currentName && currentHost && currentId){
-          if(hours < 0){
-            autoDelete(currentId, currentName, currentHost)
-            setDeletedBefore(true)
+        if(posterId === userDetails.id){
+          if(currentName && currentHost && currentId){
+            if(hours < 0){
+              autoDelete(currentId, currentName, currentHost)
+              setDeletedBefore(true)
+            }
           }
         }
       } 
     }, [hours, currentName, currentHost])
 
 
-    const handleLongPressDelete = async(id) => {
+    const handleLongPressDelete = async(id, posterId) => {
 
-      if(userDetails.accountType === "admin"){
+      if(userDetails.accountType === "admin" || posterId === userDetails.id){
         Alert.alert(
           `Warning!!!`,
           `Are you sure you wish to delete this event?`,
@@ -197,6 +200,7 @@ const Event = ({navigation}) => {
       setCurrentId(currentId = event._id)
       setCurrentName(event.name)
       setCurrentHost(event.host)
+      setPosterId(event.poster.id)
 
 
         
@@ -218,11 +222,10 @@ const Event = ({navigation}) => {
         [
           {
             text: "Update Event",
-            onPress: () => handleLongPressUpdate(event.id),
+            onPress: () => handleLongPressUpdate(event.id, event.poster.id),
             style: "cancel"
           },
-          { text: "Delete Event", onPress: () => handleLongPressDelete(event._id
-            ) }
+          { text: "Delete Event", onPress: () => handleLongPressDelete(event._id, event.poster.id) }
         ]
       );
     }}
@@ -273,6 +276,7 @@ const Event = ({navigation}) => {
       let staticDays = Math.floor(remainingStaticTime / (1000 * 60 * 60 * 24));
       // console.log(staticDays);
 
+      
       const displayStaticEvent =  <TouchableOpacity
       onLongPress={() => {
         Alert.alert(
@@ -281,11 +285,10 @@ const Event = ({navigation}) => {
           [
             {
               text: "Update Event",
-              onPress: () => handleLongPressUpdate(event.id),
+              onPress: () => handleLongPressUpdate(event.id, event.poster.id),
               style: "cancel"
             },
-            { text: "Delete Event", onPress: () => handleLongPressDelete(event._id
-              ) }
+            { text: "Delete Event", onPress: () => handleLongPressDelete(event._id, event.poster.id) }
           ]
         );
       }}
