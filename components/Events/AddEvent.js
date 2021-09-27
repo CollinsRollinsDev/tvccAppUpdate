@@ -45,7 +45,7 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
     setLeaderAccess(allowViewsBy === "ministers_department" ? "ministers_leader" : allowViewsBy === "choir_department" ? "choir_leader" : allowViewsBy === "ushering_department" ? "usher_leader" : allowViewsBy === "media_department" ? "media_leader" : null)
     }, [allowViewsBy])
 
-    console.log(leaderAccess)
+    // console.log(leaderAccess)
 
     let [hour, setHour] = useState("00")
     const [minutes, setMinutes] = useState("00")
@@ -93,48 +93,80 @@ useEffect(() => {
   }, [month, day, year])
 
   const handleSave = async() => {
-    // console.log("working")
-    await setDate(`${month} ${day}, ${year}`);
-     const res = await fetch("http://10.2.213.237:8080/event", {
-         body: JSON.stringify({
-           name: name,
-           host: host,
-           description: description,
-           date: date,
-           hour: hour,
-           minutes: minutes,
-           seconds: seconds,
-           poster: poster,
-           allowViewsBy: allowViewsBy,
-           leaderAccess: leaderAccess
-         }),
-         headers: {
-           "Content-Type": "application/json",
-         },
-         method: "POST",
-       });
+    // let array = await 
+    // let proceed;
+    setDate(`${month} ${day}, ${year}`)
+  const auth = await userDetails.userDepartment.filter(user => {
+        return user.deptName === allowViewsBy;
+    })
+console.log("waiting for",auth)
+    if(auth.length != 0){
+        if(auth[0].exco === true){
+          const res = await fetch("http://10.2.213.237:8080/event", {
+          body: JSON.stringify({
+            name: name,
+            host: host,
+            description: description,
+            date: date,
+            hour: hour,
+            minutes: minutes,
+            seconds: seconds,
+            poster: poster,
+            allowViewsBy: allowViewsBy,
+            leaderAccess: leaderAccess
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+        });
+ 
+          console.log("two")
 
-       const result = await res.json();
-       if(result.success == true){
-        Alert.alert(
-        `Event Created!`,
-        `Event with name "${name}" to host on ${date} at ${hour}:${minutes} has been created successfully.`,
-    [
-        { text: "OK", onPress: () => 
-        navigation.push("Event") 
-        
-      }
-    ]
-        );
-} else{
-             Alert.alert(
-            `UNSUCCESSFUL!!!`,
-            `Something went wrong`,
+        const result = await res.json();
+        if(result.success == true){
+         Alert.alert(
+         `Event Created!`,
+         `Event with name "${name}" to host on ${date} at ${hour}:${minutes} has been created successfully.`,
+     [
+         { text: "OK", onPress: () => 
+         navigation.push("Event") 
+         
+       }
+     ]
+         );
+      } else{
+   console.log("else");
+              Alert.alert(
+             `UNSUCCESSFUL!!!`,
+             `Something went wrong`,
+             [
+             { text: "OK", onPress: () => console.log("OK Pressed") }
+             ]
+         );
+ }
+        } else{
+        // You can not create event here as you are not an exco
+          Alert.alert(
+            `UNAUTHORIZED!!!`,
+            `You can only create an event in this group if you are part of the exco`,
             [
             { text: "OK", onPress: () => console.log("OK Pressed") }
             ]
         );
-}
+  
+        }
+      
+    } else{
+        // Oops! You dont belong to this group
+        Alert.alert(
+          `ERROR!!!`,
+          `Opps! You do not belong to this group`,
+          [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+          ]
+      );
+    }
    
 }
 

@@ -89,7 +89,7 @@ const Event = ({navigation}) => {
           }
         }
       } 
-    }, [hours, currentName, currentHost])
+    }, [hours, currentName, currentHost, posterId])
 
 
     const handleLongPressDelete = async(id, posterId, leaderAccess) => {
@@ -108,7 +108,7 @@ const Event = ({navigation}) => {
             },
             { text: "Yes", onPress: async() => {
               
-          console.log(id)
+          // console.log(id)
           const res = await fetch("http://10.2.213.237:8080/event", {
             body: JSON.stringify({
               id: id,
@@ -131,7 +131,6 @@ const Event = ({navigation}) => {
             );
   
            } else{
-             console.log("already ran")
             Alert.alert(
               `ERROR!`,
               `Something went wrong!.`,
@@ -256,15 +255,18 @@ const Event = ({navigation}) => {
     </Text>
   </TouchableOpacity>
 
-
+      const present = userDetails.userDepartment.filter(user => {
+        return user.deptName === event.allowViewsBy
+      })
 
     return (
-        event.allowViewsBy == "all" ? displayingEvent : event.allowViewsBy == userDetails.userDepartment[0] ?  displayingEvent : event.allowViewsBy == userDetails.userRole ? displayingEvent : null
-
+        event.allowViewsBy == "all" 
+        ? displayingEvent : event.allowViewsBy == present[0].deptName 
+        ?  displayingEvent : event.allowViewsBy == userDetails.userRole 
+        ? displayingEvent : null
     )
       
     } else{
-
        let stoppageTime = new Date(`${event.date} ${event.hour}:${event.minutes}:${event.seconds}`).getTime();
 
       // create static countdown
@@ -319,9 +321,16 @@ const Event = ({navigation}) => {
     </Text>
     </TouchableOpacity>
   
+      const present = userDetails.userDepartment.filter(user => {
+        return user.deptName === event.allowViewsBy
+      })
+
 
       return (
-         userDetails.userDepartment.includes(event.allowViewsBy) ?  displayStaticEvent : event.allowViewsBy == userDetails.userRole ? displayStaticEvent : event.allowViewsBy == "all" ? displayStaticEvent : null
+         present[0].length != 0 
+         ?  displayStaticEvent : event.allowViewsBy == userDetails.userRole 
+         ? displayStaticEvent : event.allowViewsBy == "all" 
+         ? displayStaticEvent : null
       )
     }
   
@@ -427,7 +436,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: "95%",
+    top: "90%",
     right: '5%',
   },
   icon: {

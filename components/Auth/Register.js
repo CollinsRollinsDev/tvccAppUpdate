@@ -28,8 +28,7 @@ const Register = ({navigation}) => {
     const [password, setPassword] = useState()
     const [confirmPassword, setConfirmPassword] = useState()
     const [btnMsg, setBtnMsg] = useState('Create My Account')
-
-
+    const [isExco, setIsExco] = useState(false);
 
     const deptToggle = userRole == "worker" ? 
                  <View style={styles.roleBox}>
@@ -94,7 +93,10 @@ const Register = ({navigation}) => {
            userRole: userRole,
            password: password,
            emailAddress: emailAddress,
-           userDepartment: userRole == "member" ? userDepartment = null : userDepartment,
+           userDepartment: userRole == "member" ? userDepartment = null : userDepartment ={
+               exco: isExco,
+               deptName: userDepartment
+           },
          }),
          headers: {
            "Content-Type": "application/json",
