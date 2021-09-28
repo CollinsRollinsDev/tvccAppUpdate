@@ -15,8 +15,8 @@ import {
   TouchableOpacity,
   LogBox,
   ListViewBase,
+  Alert
 } from "react-native";
-import myNotes from "../../../assets/Notes.json";
 import { useSelector, useDispatch } from "react-redux";
 import {
     setCurrentTitle,
@@ -25,12 +25,12 @@ import {
   } from "../../../reduxStore/actions";
  
 const Notes = ({navigation}) => {
-    // const { currentTitle, currentPostBody, currentMinistering} =
-    // useSelector((state) => state.useTheReducer);
-
+    const {userDetails, currentTitle, currentPostBody, currentMinistering} =
+    useSelector((state) => state.useTheReducer);
   const dispatch = useDispatch();
 
     const [displayNotePage, setDisplayNotePage] = useState(false)
+    const [notes, setNotes] = useState([])
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -49,9 +49,71 @@ const Notes = ({navigation}) => {
   };
 
   const handleAddNote = () => {
-    //   console.log("working")
     navigation.push("AddNote")
   }
+
+
+  const fetchNote = async() => {
+    const res = await fetch(`http://10.2.213.237:8080/notes?id=${userDetails.id}`);
+    const data = await res.json();
+    if(data.success === true){
+      setNotes(data.response.reverse())
+    } else{
+      Alert.alert(`ERROR!!!`, `${data.response}.`, [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+    }
+  }
+
+  useEffect(() => {
+  fetchNote();
+  }, [])
+
+  const handleLongPressDelete = async(userId, postId) => {
+    Alert.alert(`Warning!`, `Are you sure you want to delete this? It will be lost forever!`, [
+                 
+      {
+        text: "No",
+        onPress: () =>
+          console.log("No Clicked")
+      },
+      {
+        text: "Yes",
+        onPress: async() =>{
+
+          const res = await fetch("http://10.2.213.237:8080/notes", {
+            body: JSON.stringify({
+              userId: userId,
+              postId: postId
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "DELETE",
+          });
+
+          const response = await res.json();
+
+          if (response.success === true) {
+            Alert.alert(`SUCCESSFUL!`, `Event has been deleted.`, [
+              {
+                text: "OK",
+                onPress: () => {
+                  // navigation.push("Event")
+                },
+              },
+            ]);
+          } else {
+            Alert.alert(`ERROR!`, `Something went wrong!.`, [
+              { text: "OK", onPress: () => console.log("err") },
+            ]);
+          }
+
+        }
+      },
+    ]);
+  }
+
 
   return (
     <View style={styles.body}>
@@ -59,10 +121,29 @@ const Notes = ({navigation}) => {
       <ScrollView>
         <View style={styles.notePreviewContainer}>
           <FlatList
-            data={myNotes}
+            data={notes}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <TouchableOpacity
+              onLongPress={() => {
+                Alert.alert(`Message!`, `Do you wish to delete this note?`, [
+                 
+                  {
+                    text: "No",
+                    onPress: () =>
+                      console.log("No Clicked")
+                  },
+                  {
+                    text: "Yes",
+                    onPress: () =>
+                      handleLongPressDelete(
+                        userDetails.id,
+                        item._id
+                      ),
+                  },
+                ]);
+              }}
+
                 onPress={async() => {
                     await handleChapterPress(item.id, item.title, item.ministering, item.body);
                     navigation.push("Note");

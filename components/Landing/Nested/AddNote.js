@@ -15,13 +15,14 @@ import {
   FlatList,
   TouchableOpacity,
   LogBox,
+  Alert
 } from "react-native";
 import myNotes from "../../../assets/Notes.json";
 import { useSelector, useDispatch } from "react-redux";
  
 
 const Note = () => {
-const { currentTitle, currentPostBody, currentMinistering} =
+const { currentTitle, currentPostBody, currentMinistering, userDetails} =
     useSelector((state) => state.useTheReducer);
 
     const [addTitle, setAddTitle] = useState()
@@ -34,7 +35,39 @@ const { currentTitle, currentPostBody, currentMinistering} =
 
   const handleChapterPress = async (event) => {};
   const handleSave = async() => {
-      console.log("working")
+
+    if(!addTitle || !addPost){
+      Alert.alert(`ERROR!!!`, `Seem like some fields are missing. Please fix and try again.`, [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+    } else{
+      const res = await fetch(`http://10.2.213.237:8080/notes?id=${userDetails.id}`, {
+        body: JSON.stringify({
+          title: addTitle,
+          ministering: addMinistering,
+          body: addPost
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      });
+  
+      const data = await res.json();
+      if(data.success === true){
+        Alert.alert(`Message`, `${data.message}`, [
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ]);
+      } else{
+        Alert.alert(`Unsuccessfull!`, `${data.message}`, [
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ]);
+      }
+    }
+
+   
+
+
   }
 
   return (
