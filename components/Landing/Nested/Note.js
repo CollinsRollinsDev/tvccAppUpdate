@@ -17,11 +17,14 @@ import {
 } from "react-native";
 import myNotes from "../../../assets/Notes.json";
 import { useSelector, useDispatch } from "react-redux";
- 
+import UpdateNote from './UpdateNote';
+import { setUpdateTebSwitch } from "../../../reduxStore/actions";
 
 const Note = () => {
-const { currentTitle, currentPostBody, currentMinistering} =
+const { currentTitle, currentPostBody, currentMinistering, currentPostId, updateTabSwitch} =
     useSelector((state) => state.useTheReducer);
+    const dispatch = useDispatch()
+    // const [tabSwitch, setTabSwitch] = useState(false)
 
         // console.log(currentTitle)
   useEffect(() => {
@@ -30,19 +33,35 @@ const { currentTitle, currentPostBody, currentMinistering} =
 
   const handleChapterPress = async (event) => {};
 
-  return (
-    <View style={styles.body}>
-      <Header name="My Note" leftSide="Search" />
-        <View style={styles.notePreviewContainer}>
-        <Text style={styles.titleText}>{currentTitle}</Text>
-        <Text style={styles.minister}>
-            {`By: ${currentMinistering}`}
-        </Text>
-        <Text style={styles.postBody}>
-            {currentPostBody}
-        </Text>
-        </View>
+  const handleEdit = async() => {
+    updateTabSwitch ? dispatch(setUpdateTebSwitch(false)) : dispatch(setUpdateTebSwitch(true));
+  }
+
+  const display = <View style={styles.body}>
+  <Header name="My Note" leftSide="Search" />
+  <ScrollView>
+    <View style={styles.notePreviewContainer}>
+    <Text style={styles.titleText}>{currentTitle}</Text>
+    <Text style={styles.minister}>
+        {`By: ${currentMinistering}`}
+    </Text>
+    <Text style={styles.postBody}>
+        {currentPostBody}
+    </Text>
     </View>
+    </ScrollView>
+    <TouchableOpacity onPress={handleEdit} style={styles.saveBtn}>
+        <Text style={styles.content}>Edit Post</Text>
+    </TouchableOpacity>
+</View>
+
+  return (
+    <>
+    {
+      !updateTabSwitch ? display :  <UpdateNote currentTitle={currentTitle} currentMinistering={currentMinistering} currentPostBody={currentPostBody} />
+    }
+   
+    </>
   );
 };
 
@@ -72,7 +91,24 @@ const styles = StyleSheet.create({
   postBody: {
       fontSize: 17,
       marginTop: 20
-  }
+  },
+  saveBtn: {
+    backgroundColor: 'blue',
+    height: 40,
+    width: 130,
+    borderRadius:20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: "90%",
+    right: '5%',
+    opacity: 0.7
+},
+content: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+},
 //   input: {
 //     backgroundColor: 'transparent',
 //     width: '100%',

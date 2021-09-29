@@ -22,6 +22,7 @@ import {
     setCurrentTitle,
     setCurrentMinistering,
     setCurrentPostBody,
+    setCurrentPostId,
   } from "../../../reduxStore/actions";
  
 const Notes = ({navigation}) => {
@@ -42,7 +43,9 @@ const Notes = ({navigation}) => {
     dispatch(setCurrentTitle(title))
     dispatch(setCurrentMinistering(ministering))
     dispatch(setCurrentPostBody(post))
-    // console.log("id:", id)
+    dispatch(setCurrentPostId(id))
+    console.log("id:", id)
+    console.log("userID", userDetails.id)
     // console.log("title:", title)
     // console.log("ministering:", ministering)
     // console.log("post:", post)
@@ -99,7 +102,7 @@ const Notes = ({navigation}) => {
               {
                 text: "OK",
                 onPress: () => {
-                  // navigation.push("Event")
+                  navigation.push("Notes")
                 },
               },
             ]);
@@ -145,7 +148,7 @@ const Notes = ({navigation}) => {
               }}
 
                 onPress={async() => {
-                    await handleChapterPress(item.id, item.title, item.ministering, item.body);
+                    await handleChapterPress(item._id, item.title, item.ministering, item.body);
                     navigation.push("Note");
                 }
             }

@@ -1,4 +1,4 @@
-import { SET_CURRENT_BOOK, SET_CURRENT_CHAPTER, SET_CURRENT_VERSE, SET_CURRENT_SCRIPTURE, SET_CURRENT_TITLE, SET_CURRENT_MINISTERING, SET_CURRENT_POSTBODY, SET_USER_DETAILS } from './actions';
+import { SET_CURRENT_BOOK, SET_CURRENT_CHAPTER, SET_CURRENT_VERSE, SET_CURRENT_SCRIPTURE, SET_CURRENT_TITLE, SET_CURRENT_MINISTERING, SET_CURRENT_POSTBODY, SET_USER_DETAILS, SET_UPDATE_TAB_SWITCH, SET_CURRENT_POST_ID } from './actions';
 
 let initialState = {
     currentBook : '',
@@ -9,6 +9,8 @@ let initialState = {
     currentPostBody: '',
     currentScripture : [],
     userDetails: {},
+    updateTabSwitch: false,
+    currentPostId: '',
 }
 
 function useTheReducer(state = initialState, action){
@@ -28,6 +30,9 @@ function useTheReducer(state = initialState, action){
         case SET_CURRENT_TITLE:
             return {...state, currentTitle: action.payload}
     
+        case SET_CURRENT_POST_ID:
+            return {...state, currentPostId: action.payload}
+
         case SET_CURRENT_MINISTERING:
             return {...state, currentMinistering: action.payload}
     
@@ -36,6 +41,8 @@ function useTheReducer(state = initialState, action){
                 
         case SET_USER_DETAILS:
             return {...state, userDetails: action.payload }
+        case SET_UPDATE_TAB_SWITCH:
+                return {...state, updateTabSwitch: action.payload }
         default:
             return state;
     }

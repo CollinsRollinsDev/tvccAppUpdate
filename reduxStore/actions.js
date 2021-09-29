@@ -4,9 +4,11 @@ export const SET_CURRENT_VERSE = "SET_CURRENT_VERSE";
 export const SET_CURRENT_SCRIPTURE = "SET_CURRENT_SCRIPTURE";
 
 export const SET_CURRENT_TITLE = "SET_CURRENT_TITLE";
+export const SET_CURRENT_POST_ID= "SET_CURRENT_POST_ID";
 export const SET_CURRENT_MINISTERING = "SET_CURRENT_MINISTERING";
 export const SET_CURRENT_POSTBODY = "SET_CURRENT_POSTBODY";
 export const SET_USER_DETAILS = "SET_USER_DETAILS";
+export const SET_UPDATE_TAB_SWITCH = "SET_UPDATE_TAB_SWITCH";
 
 
 export let setCurrentBook = (payload) => (dispatch) => {
@@ -44,6 +46,13 @@ export let setCurrentTitle = (payload) => (dispatch) => {
   });
 };
 
+export let setCurrentPostId = (payload) => (dispatch) => {
+  dispatch({
+    type: SET_CURRENT_POST_ID,
+    payload: payload,
+  });
+};
+
 export let setCurrentMinistering = (payload) => (dispatch) => {
   dispatch({
     type: SET_CURRENT_MINISTERING,
@@ -63,6 +72,11 @@ export let setCurrentPostBody = (payload) => (dispatch) => {
     type: SET_CURRENT_POSTBODY,
     payload: payload,
   });
+};
 
-
+  export let setUpdateTebSwitch = (payload) => (dispatch) => {
+    dispatch({
+      type: SET_UPDATE_TAB_SWITCH,
+      payload: payload,
+    });
 };

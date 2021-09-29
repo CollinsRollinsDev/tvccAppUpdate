@@ -19,29 +19,42 @@ import {
 } from "react-native";
 import myNotes from "../../../assets/Notes.json";
 import { useSelector, useDispatch } from "react-redux";
- 
+import { setUpdateTebSwitch } from "../../../reduxStore/actions";
 
-const Note = ({navigation}) => {
-const { currentTitle, currentPostBody, currentMinistering, userDetails} =
+const UpdateNote = ({navigation, currentTitle, currentMinistering, currentPostBody, setTabSwitch}) => {
+const {userDetails, updateTabSwitch, currentPostId} =
     useSelector((state) => state.useTheReducer);
+    const dispatch = useDispatch()
 
-    const [addTitle, setAddTitle] = useState()
-    const [addMinistering, setAddMinistering] = useState()
-    const [addPost, setAddPost] = useState()
+    let [addTitle, setAddTitle] = useState()
+    let [addMinistering, setAddMinistering] = useState()
+    let [addPost, setAddPost] = useState()
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
 
+//   console.log(addTitle)
+
   const handleChapterPress = async (event) => {};
   const handleSave = async() => {
+
+    async function reDefine(){
+        addTitle == "undefined" ? addTitle = currentTitle : addTitle
+        addMinistering == "undefined" ? addMinistering = currentMinistering : addMinistering = addMinistering
+        addPost == "undefined" ? addPost = currentPostBody : addPost
+    }
+
+    await reDefine();
+
+    console.log(addMinistering)
 
     if(!addTitle || !addPost){
       Alert.alert(`ERROR!!!`, `Seem like some fields are missing. Please fix and try again.`, [
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
     } else{
-      const res = await fetch(`http://10.2.213.237:8080/notes?id=${userDetails.id}`, {
+      const res = await fetch(`http://10.2.213.237:8080/notes?userId=${userDetails.id}&postId=${currentPostId}`, {
         body: JSON.stringify({
           title: addTitle,
           ministering: addMinistering,
@@ -50,19 +63,19 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
         headers: {
           "Content-Type": "application/json",
         },
-        method: "POST",
+        method: "PATCH",
       });
   
-      const data = await res.json();
-      if(data.success === true){
-        Alert.alert(`Message`, `${data.response}`, [
-          { text: "OK", onPress: () => navigation.push("Notes") },
-        ]);
-      } else{
-        Alert.alert(`Unsuccessfull!`, `${data.response}`, [
-          { text: "OK", onPress: () => console.log("OK Pressed") },
-        ]);
-      }
+    //   const data = await res.json();
+    //   if(data.success === true){
+    //     Alert.alert(`Message`, `${data.response}`, [
+    //       { text: "OK", onPress: () => {navigation.push("Notes"), dispatch(setUpdateTebSwitch(false)) },
+    //     ]);
+    //   } else{
+    //     Alert.alert(`Unsuccessfull!`, `${data.response}`, [
+    //       { text: "OK", onPress: () => console.log("OK Pressed") },
+    //     ]);
+    //   }
     }
 
    
@@ -72,15 +85,17 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
 
   return (
     <View style={styles.body}>
-      <Header name="Add a Note" leftSide="Search" />
+      <Header name="Edit Your Note" leftSide="Search" />
+      <ScrollView>
         <View style={styles.notePreviewContainer}>
-        <TextInput onChangeText={(e) => setAddTitle(e)} style={styles.input} placeholder="Title Here...." />
-        <TextInput onChangeText={(e) => setAddMinistering(e)} style={styles.input} placeholder="Ministering Here...." />
+        
+        <TextInput defaultValue={currentTitle} onChangeText={(e) => setAddTitle(e)} style={styles.input} placeholder="Title Here...." />
+        <TextInput defaultValue={currentMinistering} onChangeText={(e) => setAddMinistering(e)} style={styles.input} placeholder="Ministering Here...." />
         <Textarea
             containerStyle={styles.textareaContainer}
             style={styles.inputPost}
             onChangeText={(e) => setAddPost(e)}
-            // defaultValue={"here"}
+            defaultValue={currentPostBody}
             // maxLength={120}
             placeholder={"Start Adding Note Here...."}
             placeholderTextColor={'#5661db'}
@@ -88,6 +103,7 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
             // numberOfLines={2}
   />
         </View>
+        </ScrollView>
         <TouchableOpacity onPress={handleSave} style={styles.saveBtn}>
             <Text style={styles.content}>Save Post</Text>
         </TouchableOpacity>
@@ -95,15 +111,19 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
   );
 };
 
-export default Note;
+export default UpdateNote;
 
 const styles = StyleSheet.create({
   body: {
     backgroundColor: "whitesmoke",
     minHeight: "100%",
+    position: 'absolute',
+    top: 0,
+    zIndex: 2,
+    width: '100%'
   },
   notePreviewContainer: {
-    minHeight: 500,
+    minHeight: "100%",
     width: "100%",
     padding: "2%",
   },
