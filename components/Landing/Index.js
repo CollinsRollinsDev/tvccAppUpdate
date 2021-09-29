@@ -23,6 +23,7 @@ import Note from "./Nested/Note";
 import AddNote from './Nested/AddNote'
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
+import UpdateNote from "./Nested/UpdateNote";
 
 
 const Stack = createNativeStackNavigator();
@@ -38,6 +39,7 @@ const Index = () => {
             <Stack.Screen name="ReadPage" component={ReadPage} options={{ headerShown: false }}/>
             <Stack.Screen name="Event" component={Event} options={{ headerShown: false }}/>
             <Stack.Screen name="Notes" component={Notes} options={{ headerShown: false }}/>
+            <Stack.Screen name="UpdateNote" component={UpdateNote} options={{ headerShown: false }}/>
             <Stack.Screen name="Note" component={Note} options={{ headerShown: false }}/>
             <Stack.Screen name="AddNote" component={AddNote} options={{ headerShown: false }}/>
             <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>

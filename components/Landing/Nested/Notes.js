@@ -98,7 +98,7 @@ const Notes = ({navigation}) => {
           const response = await res.json();
 
           if (response.success === true) {
-            Alert.alert(`SUCCESSFUL!`, `Event has been deleted.`, [
+            Alert.alert(`SUCCESSFUL!`, `Note has been deleted.`, [
               {
                 text: "OK",
                 onPress: () => {
@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
     minHeight: 500,
     width: "100%",
     padding: "2%",
+    marginBottom:65,
   },
   preview: {
     height: 90,

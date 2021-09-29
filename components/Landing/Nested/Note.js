@@ -20,7 +20,7 @@ import { useSelector, useDispatch } from "react-redux";
 import UpdateNote from './UpdateNote';
 import { setUpdateTebSwitch } from "../../../reduxStore/actions";
 
-const Note = () => {
+const Note = ({navigation}) => {
 const { currentTitle, currentPostBody, currentMinistering, currentPostId, updateTabSwitch} =
     useSelector((state) => state.useTheReducer);
     const dispatch = useDispatch()
@@ -39,8 +39,9 @@ const { currentTitle, currentPostBody, currentMinistering, currentPostId, update
 
   const display = <View style={styles.body}>
   <Header name="My Note" leftSide="Search" />
-  <ScrollView>
+  
     <View style={styles.notePreviewContainer}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
     <Text style={styles.titleText}>{currentTitle}</Text>
     <Text style={styles.minister}>
         {`By: ${currentMinistering}`}
@@ -48,8 +49,9 @@ const { currentTitle, currentPostBody, currentMinistering, currentPostId, update
     <Text style={styles.postBody}>
         {currentPostBody}
     </Text>
-    </View>
     </ScrollView>
+    </View>
+    
     <TouchableOpacity onPress={handleEdit} style={styles.saveBtn}>
         <Text style={styles.content}>Edit Post</Text>
     </TouchableOpacity>
@@ -57,9 +59,11 @@ const { currentTitle, currentPostBody, currentMinistering, currentPostId, update
 
   return (
     <>
-    {
-      !updateTabSwitch ? display :  <UpdateNote currentTitle={currentTitle} currentMinistering={currentMinistering} currentPostBody={currentPostBody} />
-    }
+    
+      <View style={styles.body}>
+     { !updateTabSwitch ? display :  <UpdateNote navigation={navigation} currentTitle={currentTitle} currentMinistering={currentMinistering} currentPostBody={currentPostBody} />}
+      </View>
+    
    
     </>
   );
@@ -71,11 +75,13 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: "whitesmoke",
     minHeight: "100%",
+    // marginBottom: 100,
   },
   notePreviewContainer: {
     minHeight: 500,
     width: "100%",
     padding: "2%",
+    marginBottom: 200,
   },
   titleText:{
     textAlign: 'center',
@@ -100,7 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: "90%",
+    top: "73%",
     right: '5%',
     opacity: 0.7
 },

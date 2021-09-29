@@ -36,7 +36,7 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
   const handleChapterPress = async (event) => {};
   const handleSave = async() => {
 
-    if(!addTitle || !addPost){
+    if(!addTitle || !addPost || !addMinistering){
       Alert.alert(`ERROR!!!`, `Seem like some fields are missing. Please fix and try again.`, [
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
