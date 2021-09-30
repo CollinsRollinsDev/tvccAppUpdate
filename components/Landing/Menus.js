@@ -10,11 +10,13 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert
 } from "react-native";
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // import { NavigationContainer } from "@react-navigation/native";
 import Bible from "./Nested/Bible";
 import ReadPage from '../ReadBiblePage/ReadPage'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 // const Stack = createNativeStackNavigator();
@@ -55,15 +57,27 @@ const Menus = ({navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menu}>
-                <Text style={styles.content}>Login</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.menu}>
-                <Text style={styles.content}>Sign Up</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.menu}>
                 <Text style={styles.content}>Settings/Profile</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => {
+                  Alert.alert(
+                    `Message`,
+                    `Are you sure you wish to logout?`,
+                    [
+                        {
+                          text: "Cancel",
+                          onPress: () => console.log("Cancel Pressed"),
+                          style: "cancel"
+                        },
+                      { text: "OK", onPress: async() => {
+                        await AsyncStorage.removeItem("userProfile");
+                        navigation.navigate("Login")
+                      } },
+                    ]
+                  );
+            }} style={styles.menu}>
+                <Text style={styles.content}>Logout</Text>
             </TouchableOpacity>
         </View>
         </ScrollView>

@@ -41,6 +41,8 @@ const Event = ({ navigation }) => {
   const [currentHost, setCurrentHost] = useState();
   const [posterId, setPosterId] = useState();
   const [deletedBefore, setDeletedBefore] = useState(false);
+  // const [isPresentTop, setIsPresentTop] = useState()
+  // const [isPresentbottom, setIsPresentbottom] = useState()
 
   function sortFunction(a, b) {
     var dateA = new Date(a.date).getTime();
@@ -279,13 +281,29 @@ const Event = ({ navigation }) => {
             return user.deptName === event.allowViewsBy;
           });
 
-          return event.allowViewsBy == "all"
+          let condition;
+
+          if(present.length != 0){
+            condition =  event.allowViewsBy == "all"
             ? displayingEvent
             : event.allowViewsBy == present[0].deptName
             ? displayingEvent
             : event.allowViewsBy == userDetails.userRole
             ? displayingEvent
             : null;
+          } else{
+            condition =  event.allowViewsBy == "all"
+            ? displayingEvent
+            // : event.allowViewsBy == present[0].deptName
+            // ? displayingEvent
+            : event.allowViewsBy == userDetails.userRole
+            ? displayingEvent
+            // : <Text key={index} style={styles.nothing}>Nothing to show here</Text>;
+            : null;
+          }
+          
+          return condition
+
         } else {
           let stoppageTime = new Date(
             `${event.date} ${event.hour}:${event.minutes}:${event.seconds}`
@@ -371,13 +389,28 @@ const Event = ({ navigation }) => {
             return user.deptName === event.allowViewsBy;
           });
 
-          return present[0].length != 0
+
+          let condition;
+
+          if(present.length != 0){
+            condition =  present[0].length != 0
             ? displayStaticEvent
             : event.allowViewsBy == userDetails.userRole
             ? displayStaticEvent
-            : event.allowViewsBy == "all"
+              : event.allowViewsBy == "all"
             ? displayStaticEvent
             : null;
+          } else{
+            condition =  event.allowViewsBy == userDetails.userRole
+            ? displayStaticEvent
+              : event.allowViewsBy == "all"
+            ? displayStaticEvent
+            // : <Text key={index} style={styles.nothing}>Nothing to show here</Text>;
+            : null;
+          }
+          
+
+         return condition
         }
       })
     : null;
@@ -397,6 +430,12 @@ const Event = ({ navigation }) => {
     navigation.push("AddEvent");
   };
 
+  const isExco = userDetails.userDepartment.filter(dept => {
+      return dept.exco === true
+  })
+
+  console.log(isExco)
+
   return (
     <View style={styles.body}>
       <Header name="Events" leftSide="search" />
@@ -406,9 +445,13 @@ const Event = ({ navigation }) => {
         }
       >
         {mappingEvent}
+
+        {/* <Text style={styles.nothing}>Nothing to show here</Text> */}
+
+
       </ScrollView>
       {userDetails.accountType === "admin" ||
-      userDetails.excoType.length != 0 ? (
+      isExco != 0 ? (
         <TouchableOpacity onPress={handleAddNote} style={styles.addBox}>
           <Text style={styles.icon}>add</Text>
         </TouchableOpacity>
@@ -489,4 +532,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 17,
   },
+  nothing:{
+    textAlign: 'center',
+    fontSize: 20,
+    color: 'white',
+    fontWeight:'bold',
+    marginTop: '20%'
+  }
 });

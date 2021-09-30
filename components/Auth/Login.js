@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserDetails } from "../../reduxStore/actions";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -61,6 +62,7 @@ const Login = ({ navigation }) => {
 
       if (data.success == true) {
         let user_data = data.details;
+        await AsyncStorage.setItem("userProfile", JSON.stringify(user_data));
         dispatch(setUserDetails(user_data));
         //     // console.log(user_data)
         setBtnMsg("Access Granted. Redirecting...");
@@ -78,6 +80,21 @@ const Login = ({ navigation }) => {
       }
     }
   };
+
+  const checkAuth = async() => {
+    const item = await AsyncStorage.getItem("userProfile");
+    if(item != null){
+      dispatch(setUserDetails(JSON.parse(item)));
+      navigation.navigate("HomePage");
+      console.log(userDetails)
+    }
+  }
+
+  useEffect(() => {
+    checkAuth();
+  }, [])
+
+  // expo install @react-native-async-storage/async-storage
 
   return (
     <View style={styles.body}>
