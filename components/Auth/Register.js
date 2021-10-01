@@ -112,7 +112,11 @@ const Register = ({ navigation }) => {
         const result = await res.json();
 
         Alert.alert(`CONGRATULATIONS!!!`, `${JSON.stringify(result.message)}`, [
-          { text: "OK", onPress: () => navigation.push("Login") },
+          {
+            text: "OK",
+            onPress: () =>
+              navigation.push("Login")
+          },
         ]);
         if (result.success === true) {
           //  router.push("/login")
