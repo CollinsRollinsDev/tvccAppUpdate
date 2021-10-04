@@ -41,8 +41,8 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
   const handleChapterPress = async (event) => {};
   const handleSave = async() => {
 
-    if(addTitle && addMinistering && addPost){
-
+    if(addTitle && addMinistering && addPost && addPost != '' && addTitle != '' && addMinistering != ''){
+      
     let item = await AsyncStorage.getItem("myNotes");
     let newItem = await JSON.parse(item)
     console.log("newItem:",newItem)
