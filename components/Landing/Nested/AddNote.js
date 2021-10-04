@@ -41,6 +41,8 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
   const handleChapterPress = async (event) => {};
   const handleSave = async() => {
 
+    if(addTitle && addMinistering && addPost){
+
     let item = await AsyncStorage.getItem("myNotes");
     let newItem = await JSON.parse(item)
     console.log("newItem:",newItem)
@@ -118,10 +120,10 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
     //   }
     // }
 
-   
-
+  } else{
 
   }
+}
 
   useEffect(() => {
      handleSave()
