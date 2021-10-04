@@ -21,6 +21,8 @@ import {
 import myNotes from "../../../assets/Notes.json";
 import { useSelector, useDispatch } from "react-redux";
 import { setUpdateTebSwitch } from "../../../reduxStore/actions";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const UpdateNote = ({navigation, currentTitle, currentMinistering, currentPostBody, setTabSwitch}) => {
 const {userDetails, updateTabSwitch, currentPostId} =
@@ -35,47 +37,63 @@ const {userDetails, updateTabSwitch, currentPostId} =
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
 
-//   console.log(addTitle)
+  // console.log(currentPostId)
 
   const handleChapterPress = async (event) => {};
   const handleSave = async() => {
 
+    let item = await AsyncStorage.getItem("myNotes");
+    let newItem = await JSON.parse(item)
 
-    console.log(addPost)
+    // console.log(addPost)
 
     if(!addTitle && !addPost && !addMinistering){
       Alert.alert(`ERROR!!!`, `Seem like some fields are missing. Please fix and try again.`, [
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
     } else{
-      const res = await fetch(`http://10.2.213.237:8080/notes?userId=${userDetails.id}&postId=${currentPostId}`, {
-        body: JSON.stringify({
-          title: addTitle,
-          ministering: addMinistering,
-          body: addPost
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "PATCH",
-      });
+
+      const updated = newItem.map(item => {
+        if(item.id == currentPostId){
+          item.title = addTitle;
+          item.ministering = addMinistering;
+          item.post = addPost
+        }
+        return item
+      })
+      // console.log(updated)
+      await AsyncStorage.setItem("myNotes", JSON.stringify(updated));
+
+      console.log("updated....")
+
+    //   const res = await fetch(`http://10.2.213.237:8080/notes?userId=${userDetails.id}&postId=${currentPostId}`, {
+    //     body: JSON.stringify({
+    //       title: addTitle,
+    //       ministering: addMinistering,
+    //       body: addPost
+    //     }),
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     method: "PATCH",
+    //   });
   
-      const data = await res.json();
-      if(data.success === true){
-        Alert.alert(`SUCCESSFUL!`, `${data.response}`, [
-          {
-            text: "OK",
-            onPress: async() => {
-              dispatch(setUpdateTebSwitch(false))
-              navigation.push("Note")
-            },
-          },
-        ]);
-    } else{
-      Alert.alert(`ERROR!`, `Something went wrong!.`, [
-        { text: "OK", onPress: () => console.log("err") },
-      ]);
-    }
+    //   const data = await res.json();
+    //   if(data.success === true){
+    //     Alert.alert(`SUCCESSFUL!`, `${data.response}`, [
+    //       {
+    //         text: "OK",
+    //         onPress: async() => {
+    //           dispatch(setUpdateTebSwitch(false))
+    //           navigation.push("Note")
+    //         },
+    //       },
+    //     ]);
+    // } else{
+    //   Alert.alert(`ERROR!`, `Something went wrong!.`, [
+    //     { text: "OK", onPress: () => console.log("err") },
+    //   ]);
+    // }
    
   }
 
