@@ -24,6 +24,8 @@ import {
     setCurrentPostBody,
     setCurrentPostId,
   } from "../../../reduxStore/actions";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
  
 const Notes = ({navigation}) => {
     const {userDetails, currentTitle, currentPostBody, currentMinistering} =
@@ -66,6 +68,10 @@ const Notes = ({navigation}) => {
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
     }
+
+    const item = await AsyncStorage.getItem("myNotes");
+    setNotes(JSON.parse(item));
+    // console.log("notes",notes)
   }
 
   useEffect(() => {
@@ -148,7 +154,8 @@ const Notes = ({navigation}) => {
               }}
 
                 onPress={async() => {
-                    await handleChapterPress(item._id, item.title, item.ministering, item.body);
+                  // await handleChapterPress(item._id, item.title, item.ministering, item.body);
+                  await handleChapterPress(item.id, item.title, item.ministering, item.post);
                     navigation.push("Note");
                 }
             }
@@ -157,7 +164,7 @@ const Notes = ({navigation}) => {
                   <Text style={styles.title}>{item.title}</Text>
                   <Text style={styles.preacher}>{item.ministering}</Text>
                   <Text style={styles.excerpt}>
-                    {item.body.substring(0, 70) + "..."}
+                    {item.post.substring(0, 70) + "..."}
                   </Text>
                 </View>
               </TouchableOpacity>

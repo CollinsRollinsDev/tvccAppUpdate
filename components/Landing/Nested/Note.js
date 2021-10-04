@@ -19,6 +19,8 @@ import myNotes from "../../../assets/Notes.json";
 import { useSelector, useDispatch } from "react-redux";
 import UpdateNote from './UpdateNote';
 import { setUpdateTebSwitch } from "../../../reduxStore/actions";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Note = ({navigation}) => {
 const { currentTitle, currentPostBody, currentMinistering, currentPostId, updateTabSwitch} =

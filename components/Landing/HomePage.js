@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,10 +15,27 @@ import About from '../Landing/Nested/About'
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
 const HomePage = ({navigation}) => {
+
+  const initializeNotepadlocalLibrary = async() => {
+    
+    const item = await AsyncStorage.getItem("myNotes");
+    let newItem = await JSON.parse(item);
+    console.log(newItem)
+
+        if(newItem == null || newItem.length == "undefined" || newItem.length == 0){
+        const myNotes = [];
+        await AsyncStorage.setItem("myNotes", JSON.stringify(myNotes));
+      }
+  }
+
+  useEffect(() => {
+    initializeNotepadlocalLibrary();
+  }, [])
 
   const { userDetails } =
   useSelector((state) => state.useTheReducer);
