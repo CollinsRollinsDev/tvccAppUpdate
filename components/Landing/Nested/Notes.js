@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Header from "../../Header/Header";
 
 import {
@@ -15,7 +15,8 @@ import {
   TouchableOpacity,
   LogBox,
   ListViewBase,
-  Alert
+  Alert,
+  RefreshControl,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -23,11 +24,30 @@ import {
     setCurrentMinistering,
     setCurrentPostBody,
     setCurrentPostId,
+    
   } from "../../../reduxStore/actions";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
  
 const Notes = ({navigation}) => {
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => {
+      setRefreshing(false)
+      fetchNote();
+    });
+  }, []);
+
+
+
+
     const {userDetails, currentTitle, currentPostBody, currentMinistering} =
     useSelector((state) => state.useTheReducer);
   const dispatch = useDispatch();
@@ -127,7 +147,11 @@ const Notes = ({navigation}) => {
   return (
     <View style={styles.body}>
       <Header name="Notes" leftSide="Search" />
-      <ScrollView>
+      <ScrollView 
+         refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View style={styles.notePreviewContainer}>
           <FlatList
             data={notes}

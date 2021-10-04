@@ -26,7 +26,10 @@ const Event = ({ navigation }) => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    wait(2000).then(() => setRefreshing(false));
+    wait(2000).then(() => {
+      setRefreshing(false)
+      getEvent();
+    });
   }, []);
 
   const { userDetails } = useSelector((state) => state.useTheReducer);
