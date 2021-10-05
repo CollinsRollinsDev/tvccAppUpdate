@@ -23,6 +23,7 @@ import Notes from "./components/Landing/Nested/Notes.js";
 import Register from "./components/Auth/Register.js";
 import AddEvent from "./components/Events/AddEvent.js";
 import UpdateNote from "./components/Landing/Nested/UpdateNote.js";
+import Profile_Settings from "./components/Profile_Seetings/Profile_Settings.js";
 
 export default function App() {
   return (
@@ -38,8 +39,9 @@ export default function App() {
         {/* <Notes /> */}
         {/* <AddEvent /> */}
         {/* <UpdateNote/> */}
-        <Index />
+        {/* <Index /> */}
         {/* <Register /> */}
+        <Profile_Settings />
       </View>
     </Provider>
   );
