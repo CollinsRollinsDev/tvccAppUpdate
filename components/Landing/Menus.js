@@ -56,7 +56,7 @@ const Menus = ({navigation}) => {
                 <Text style={styles.content}>Events</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menu}>
+            <TouchableOpacity onPress={() => navigation.push("Profile")} style={styles.menu}>
                 <Text style={styles.content}>Settings/Profile</Text>
             </TouchableOpacity>
 

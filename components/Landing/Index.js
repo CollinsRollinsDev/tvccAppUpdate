@@ -24,6 +24,7 @@ import AddNote from './Nested/AddNote'
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import UpdateNote from "./Nested/UpdateNote";
+import Profile_Settings from "../Profile_Seetings/Profile_Settings";
 
 
 const Stack = createNativeStackNavigator();
@@ -44,6 +45,7 @@ const Index = () => {
             <Stack.Screen name="AddNote" component={AddNote} options={{ headerShown: false }}/>
             <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
             <Stack.Screen name="AddEvent" component={AddEvent} options={{ headerShown: false }}/>
+            <Stack.Screen name="Profile" component={Profile_Settings} options={{ headerShown: false }}/>
         </Stack.Navigator>
     </NavigationContainer>
     

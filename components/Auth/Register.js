@@ -22,6 +22,7 @@ const Register = ({ navigation }) => {
   const [lastName, setLastName] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
   const [emailAddress, setEmailAddress] = useState();
+  const [churchBranch, setChurchBranch] = useState("lagos_branch");
   const [userRole, setUserRole] = useState();
   let [userDepartment, setuserDepartment] = useState();
   const [password, setPassword] = useState();
@@ -59,7 +60,8 @@ const Register = ({ navigation }) => {
       !phoneNumber ||
       !userRole ||
       userRole == "" ||
-      !emailAddress
+      !emailAddress ||
+      churchBranch == ''
     ) {
       // if(!firstName){
 
@@ -94,6 +96,7 @@ const Register = ({ navigation }) => {
             phoneNumber: phoneNumber,
             userRole: userRole,
             password: password,
+            churchBranch: churchBranch,
             emailAddress: emailAddress,
             userDepartment:
               userRole == "member"
@@ -156,6 +159,18 @@ const Register = ({ navigation }) => {
             style={styles.input}
             placeholder="Email Address"
           />
+
+           <View style={styles.roleBox}>
+            <Picker
+              style={styles.role}
+              selectedValue={churchBranch}
+              onValueChange={(itemValue, itemIndex) => setChurchBranch(itemValue)}
+            >
+              <Picker.Item label="Church Branch" value="" />
+              <Picker.Item label="Lagos Branch" value="lagos_branch" />
+              <Picker.Item label="Benin HeadQuater" value="benin_headquater" />
+            </Picker>
+          </View>
 
           <View style={styles.roleBox}>
             <Picker

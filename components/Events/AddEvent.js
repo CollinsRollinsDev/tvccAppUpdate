@@ -57,6 +57,7 @@ const AddEvent = ({ navigation }) => {
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
   let [format, setFormat] = useState("AM");
+  let [churchBranch, setChurchBranch] = useState("AM");
   const [description, setDescription] = useState();
 
   useEffect(() => {
@@ -96,7 +97,7 @@ const AddEvent = ({ navigation }) => {
 
   const handleSave = async () => {
     if (allowViewsBy == "all" || allowViewsBy == "worker") {
-      if (userDetails.accountType === "admin") {
+      if (userDetails.accountType === "admin" && userDetails.churchBranch.includes(churchBranch)) {
         const res = await fetch("http://10.2.213.237:8080/event", {
           body: JSON.stringify({
             name: name,
@@ -107,6 +108,7 @@ const AddEvent = ({ navigation }) => {
             minutes: minutes,
             seconds: seconds,
             poster: poster,
+            churchBranch: churchBranch,
             allowViewsBy: allowViewsBy,
             leaderAccess: leaderAccess,
           }),
@@ -144,7 +146,7 @@ const AddEvent = ({ navigation }) => {
       });
       console.log("waiting for", auth);
       if (auth.length != 0) {
-        if (auth[0].exco === true) {
+        if (auth[0].exco === true && userDetails.churchBranch.includes(churchBranch)) {
           const res = await fetch("http://10.2.213.237:8080/event", {
             body: JSON.stringify({
               name: name,
@@ -154,6 +156,7 @@ const AddEvent = ({ navigation }) => {
               hour: hour,
               minutes: minutes,
               seconds: seconds,
+              churchBranch: churchBranch,
               poster: poster,
               allowViewsBy: allowViewsBy,
               leaderAccess: leaderAccess,
@@ -208,6 +211,7 @@ const AddEvent = ({ navigation }) => {
             style={styles.input}
             placeholder="Name of Event"
           ></TextInput>
+
           <TextInput
             onChangeText={(e) => setHost(e)}
             style={styles.input}
@@ -220,6 +224,22 @@ const AddEvent = ({ navigation }) => {
           ></TextInput>
 
           <View style={styles.containerFlex}>
+          
+            <View style={styles.roleBox}>
+              <Picker
+                style={styles.role}
+                selectedValue={churchBranch}
+                onValueChange={(itemValue, itemIndex) => {
+                  setChurchBranch(itemValue);
+                  // handleSwitch(itemValue)
+                }}
+              >
+                <Picker.Item label="Lagos Branch" value="lagos_branch" />
+                <Picker.Item label="Benin HeadQuater" value="benin_headquater" />
+              </Picker>
+            </View>
+
+
             <View style={styles.roleBox}>
               <Picker
                 style={styles.role}

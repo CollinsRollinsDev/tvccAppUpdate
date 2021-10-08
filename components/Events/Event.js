@@ -287,19 +287,19 @@ const Event = ({ navigation }) => {
           let condition;
 
           if(present.length != 0){
-            condition =  event.allowViewsBy == "all"
+            condition = event.allowViewsBy == "all" && userDetails.churchBranch.includes(event.churchBranch)
             ? displayingEvent
-            : event.allowViewsBy == present[0].deptName
+            : event.allowViewsBy == present[0].deptName && userDetails.churchBranch.includes(event.churchBranch)
             ? displayingEvent
-            : event.allowViewsBy == userDetails.userRole
+            : event.allowViewsBy == userDetails.userRole && userDetails.churchBranch.includes(event.churchBranch)
             ? displayingEvent
             : null;
           } else{
-            condition =  event.allowViewsBy == "all"
+            condition =  event.allowViewsBy == "all" && userDetails.churchBranch.includes(event.churchBranch)
             ? displayingEvent
             // : event.allowViewsBy == present[0].deptName
             // ? displayingEvent
-            : event.allowViewsBy == userDetails.userRole
+            : event.allowViewsBy == userDetails.userRole && userDetails.churchBranch.includes(event.churchBranch)
             ? displayingEvent
             // : <Text key={index} style={styles.nothing}>Nothing to show here</Text>;
             : null;
@@ -396,17 +396,17 @@ const Event = ({ navigation }) => {
           let condition;
 
           if(present.length != 0){
-            condition =  present[0].length != 0
+            condition =  present[0].length != 0 && userDetails.churchBranch.includes(event.churchBranch)
             ? displayStaticEvent
-            : event.allowViewsBy == userDetails.userRole
+            : event.allowViewsBy == userDetails.userRole && userDetails.churchBranch.includes(event.churchBranch)
             ? displayStaticEvent
-              : event.allowViewsBy == "all"
+              : event.allowViewsBy == "all" && userDetails.churchBranch.includes(event.churchBranch)
             ? displayStaticEvent
             : null;
           } else{
-            condition =  event.allowViewsBy == userDetails.userRole
+            condition =  event.allowViewsBy == userDetails.userRole && userDetails.churchBranch.includes(event.churchBranch)
             ? displayStaticEvent
-              : event.allowViewsBy == "all"
+              : event.allowViewsBy == "all" && userDetails.churchBranch.includes(event.churchBranch)
             ? displayStaticEvent
             // : <Text key={index} style={styles.nothing}>Nothing to show here</Text>;
             : null;

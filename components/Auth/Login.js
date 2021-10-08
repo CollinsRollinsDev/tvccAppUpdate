@@ -127,7 +127,7 @@ const Login = ({ navigation }) => {
         onPress={() => navigation.push("Register")}
         style={styles.alt}
       >
-        <Text style={styles.altClick}>Don't have an account? Sign!</Text>
+        <Text style={styles.altClick}>Don't have an account? Sign up!</Text>
       </TouchableOpacity>
       {/* <RefreshControl
             refreshing={refreshing}

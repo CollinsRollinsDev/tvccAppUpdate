@@ -39,9 +39,9 @@ export default function App() {
         {/* <Notes /> */}
         {/* <AddEvent /> */}
         {/* <UpdateNote/> */}
-        {/* <Index /> */}
+        <Index />
         {/* <Register /> */}
-        <Profile_Settings />
+        {/* <Profile_Settings /> */}
       </View>
     </Provider>
   );
