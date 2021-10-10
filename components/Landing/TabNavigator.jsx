@@ -13,70 +13,49 @@ import Menus from "./Menus";
 import About from "../Landing/Nested/About";
 import Bible from "./Nested/Bible";
 import Profile_Settings from "../Profile_Seetings/Profile_Settings";
+import HomePage from './HomePage';
+import ReadPage from "../ReadBiblePage/ReadPage";
+import Event from "../Events/Event";
+import AddEvent from "../Events/AddEvent";
+import Notes from "./Nested/Notes";
+import Note from "./Nested/Note";
+import AddNote from './Nested/AddNote'
+import Login from '../Auth/Login';
+import Register from '../Auth/Register';
+import UpdateNote from "./Nested/UpdateNote";
 
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import { createNativeTabNavigator } from "@react-navigation/native-Tab";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// const Stack = createNativeStackNavigator();
+// const Tab = createNativeTabNavigator();
 const Tab = createBottomTabNavigator();
 
-const HomePage = ({ navigation }) => {
-  const initializeNotepadlocalLibrary = async () => {
-    const item = await AsyncStorage.getItem("myNotes");
-    let newItem = await JSON.parse(item);
-    console.log(newItem);
-
-    if (
-      newItem == null ||
-      newItem.length == "undefined" ||
-      newItem.length == 0
-    ) {
-      const myNotes = [];
-      await AsyncStorage.setItem("myNotes", JSON.stringify(myNotes));
-    }
-  };
-
-  useEffect(() => {
-    initializeNotepadlocalLibrary();
-  }, []);
+const TabNavigator = ({ navigation }) => {
 
   const { userDetails } = useSelector((state) => state.useTheReducer);
   return (
     <>
-     
-      <View style={styles.body}>
-        <View style={styles.upperContainer}>
-          <Text style={styles.welcome}>
-            {userDetails.firstName} {userDetails.lastName}
-          </Text>
-          <View style={styles.churchText}>
-            <Text style={styles.churchName}>Truevine Christian Center</Text>
-            <Text style={styles.churchSlogan}>Mount of Grace and Glory</Text>
-          </View>
-
-          <View style={styles.imgView}>
-            <Image
-              style={styles.stretch}
-              source={require("../../assets/study.jpg")}
-            />
-          </View>
-
-          <Image
-            style={styles.logo}
-            source={require("../../assets/logo.png")}
-          />
-        </View>
-
-        <Menus navigation={navigation} />
-      </View>
+      <Tab.Navigator>
+            <Tab.Screen name="HomePage" component={HomePage} options={{ headerShown: false }}/>
+            {/* <Tab.Screen name="About" component={About} options={{ headerShown: false }}/> */}
+            <Tab.Screen name="Bible" component={Bible} options={{ headerShown: false }}/>
+            {/* <Tab.Screen name="ReadPage" component={ReadPage} options={{ headerShown: false }}/> */}
+            <Tab.Screen name="Event" component={Event} options={{ headerShown: false }}/>
+            <Tab.Screen name="Notes" component={Notes} options={{ headerShown: false }}/>
+            {/* <Tab.Screen name="UpdateNote" component={UpdateNote} options={{ headerShown: false }}/> */}
+            {/* <Tab.Screen name="Note" component={Note} options={{ headerShown: false }}/> */}
+            {/* <Tab.Screen name="AddNote" component={AddNote} options={{ headerShown: false }}/> */}
+            <Tab.Screen name="Profile" component={Profile_Settings} options={{ headerShown: false }}/>
+          {/* <Tab.Screen name="Profile" component={Profile_Settings} />{" "} */}
+        </Tab.Navigator>
     </>
   );
 };
 
-export default HomePage;
+export default TabNavigator;
 
 const styles = StyleSheet.create({
   body: {

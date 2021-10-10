@@ -25,6 +25,7 @@ import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import UpdateNote from "./Nested/UpdateNote";
 import Profile_Settings from "../Profile_Seetings/Profile_Settings";
+import TabNavigator from "./TabNavigator";
 
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,7 @@ const Index = () => {
         <NavigationContainer>
         <Stack.Navigator>
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+            <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }}/>
             <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }}/>
             <Stack.Screen name="About" component={About} options={{ headerShown: false }}/>
             <Stack.Screen name="Bible" component={Bible} options={{ headerShown: false }}/>

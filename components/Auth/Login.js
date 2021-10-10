@@ -47,7 +47,7 @@ const Login = ({ navigation }) => {
       ]);
     } else {
       setBtnMsg("Authenticating...");
-      const res = await fetch("http://10.2.213.237:8080/signin", {
+      const res = await fetch("http://10.2.139.160:8080/signin", {
         body: JSON.stringify({
           emailAddress: emailAddress,
           password: password,
@@ -62,6 +62,7 @@ const Login = ({ navigation }) => {
 
       if (data.success == true) {
         let user_data = data.details;
+        console.log("userId from login page:" ,user_data.id)
         await AsyncStorage.setItem("userProfile", JSON.stringify(user_data));
         dispatch(setUserDetails(user_data));
         //     // console.log(user_data)
@@ -70,7 +71,7 @@ const Login = ({ navigation }) => {
         Alert.alert(
           `ACCESS GRANTED!!!`,
           `Welcome ${user_data.firstName} ${user_data.lastName}`,
-          [{ text: "OK", onPress: () => navigation.push("HomePage") }]
+          [{ text: "OK", onPress: () => navigation.push("TabNavigator") }]
         );
       } else {
         setBtnMsg("Sign In");

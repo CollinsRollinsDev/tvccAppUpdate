@@ -98,7 +98,7 @@ const AddEvent = ({ navigation }) => {
   const handleSave = async () => {
     if (allowViewsBy == "all" || allowViewsBy == "worker") {
       if (userDetails.accountType === "admin" && userDetails.churchBranch.includes(churchBranch)) {
-        const res = await fetch("http://10.2.213.237:8080/event", {
+        const res = await fetch("http://10.2.139.160:8080/event", {
           body: JSON.stringify({
             name: name,
             host: host,
@@ -147,7 +147,7 @@ const AddEvent = ({ navigation }) => {
       console.log("waiting for", auth);
       if (auth.length != 0) {
         if (auth[0].exco === true && userDetails.churchBranch.includes(churchBranch)) {
-          const res = await fetch("http://10.2.213.237:8080/event", {
+          const res = await fetch("http://10.2.139.160:8080/event", {
             body: JSON.stringify({
               name: name,
               host: host,

@@ -96,7 +96,7 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
     //     { text: "OK", onPress: () => console.log("OK Pressed") },
     //   ]);
     // } else{
-    //   const res = await fetch(`http://10.2.213.237:8080/notes?id=${userDetails.id}`, {
+    //   const res = await fetch(`http://10.2.139.160:8080/notes?id=${userDetails.id}`, {
     //     body: JSON.stringify({
     //       title: addTitle,
     //       ministering: addMinistering,

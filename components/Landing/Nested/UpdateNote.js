@@ -66,7 +66,7 @@ const {userDetails, updateTabSwitch, currentPostId} =
 
       console.log("updated....")
 
-    //   const res = await fetch(`http://10.2.213.237:8080/notes?userId=${userDetails.id}&postId=${currentPostId}`, {
+    //   const res = await fetch(`http://10.2.139.160:8080/notes?userId=${userDetails.id}&postId=${currentPostId}`, {
     //     body: JSON.stringify({
     //       title: addTitle,
     //       ministering: addMinistering,

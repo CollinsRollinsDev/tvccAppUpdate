@@ -61,7 +61,7 @@ const Profile_Settings = () => {
         !showPasswordInput ? setShowPasswordInput(true) : setShowPasswordInput(false);
         if(showPasswordInput && password){
             setEditableText("Processing");
-         const res = await fetch("http://10.2.213.237:8080/updateUser", {
+         const res = await fetch("http://10.2.139.160:8080/updateuser", {
         body: JSON.stringify({
           id: userDetails.id,
           firstName: firstName,
@@ -81,7 +81,7 @@ const Profile_Settings = () => {
         let user_data = data.data;
         await AsyncStorage.setItem("userProfile", JSON.stringify(user_data));
         dispatch(setUserDetails(user_data));
-        //     // console.log(user_data)
+            // console.log(user_data)
         setEditableText("Edit Profile");
         setEditable(false)
         setShowPasswordInput(false)

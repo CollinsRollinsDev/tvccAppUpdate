@@ -89,7 +89,7 @@ const Register = ({ navigation }) => {
         ]);
       } else {
         setBtnMsg("Registering, please wait...");
-        const res = await fetch("http://10.2.213.237:8080/signup", {
+        const res = await fetch("http://10.2.139.160:8080/signup", {
           body: JSON.stringify({
             firstName: firstName,
             lastName: lastName,
