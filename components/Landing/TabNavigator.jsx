@@ -41,21 +41,30 @@ const TabNavigator = ({ navigation }) => {
     <>
       <Tab.Navigator
       screenOptions={({route})=> ({
-          tabBarIcon:(focused, size, color)=>{
+          tabBarIcon:({focused, size, color})=>{
             let iconName;
             if(route.name === "HomePage"){
-                iconName = 'btc'
+                iconName = 'home';
+                size = focused ? 20 : 17;
             } else if(route.name === "Bible"){
-                iconName = 'btc'
+                iconName = 'bible';
+                size = focused ? 20 : 17;
+                color = focused ? 'brown' : 'black'
             } else if(route.name === "Event"){
-                iconName = 'btc'
+                iconName = 'calendar-alt';
+                size = focused ? 20 : 17;
+                color = focused ? 'brown' : 'black'
             } else if(route.name === "Notes"){
-                iconName = 'btc'
+                iconName = 'sticky-note';
+                size = focused ? 20 : 17;
+                color = focused ? 'brown' : 'black'
             } else if(route.name === "Profile"){
-                iconName = 'btc'
+                iconName = 'user-alt';
+                size = focused ? 20 : 17;
+                color = focused ? 'brown' : 'black'
             }
             return (
-                <FontAwesome5 name={iconName} />
+                <FontAwesome5 name={iconName} size={size} color={color}/>
             )
 
           }
