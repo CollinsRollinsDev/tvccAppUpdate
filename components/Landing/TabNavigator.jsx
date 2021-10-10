@@ -29,6 +29,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 // const Tab = createNativeTabNavigator();
 const Tab = createBottomTabNavigator();
@@ -38,7 +39,28 @@ const TabNavigator = ({ navigation }) => {
   const { userDetails } = useSelector((state) => state.useTheReducer);
   return (
     <>
-      <Tab.Navigator>
+      <Tab.Navigator
+      screenOptions={({route})=> ({
+          tabBarIcon:(focused, size, color)=>{
+            let iconName;
+            if(route.name === "HomePage"){
+                iconName = 'btc'
+            } else if(route.name === "Bible"){
+                iconName = 'btc'
+            } else if(route.name === "Event"){
+                iconName = 'btc'
+            } else if(route.name === "Notes"){
+                iconName = 'btc'
+            } else if(route.name === "Profile"){
+                iconName = 'btc'
+            }
+            return (
+                <FontAwesome5 name={iconName} />
+            )
+
+          }
+      })}
+      >
             <Tab.Screen name="HomePage" component={HomePage} options={{ headerShown: false }}/>
             {/* <Tab.Screen name="About" component={About} options={{ headerShown: false }}/> */}
             <Tab.Screen name="Bible" component={Bible} options={{ headerShown: false }}/>
