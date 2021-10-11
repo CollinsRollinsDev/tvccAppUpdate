@@ -86,7 +86,7 @@ const Login = ({ navigation }) => {
     const item = await AsyncStorage.getItem("userProfile");
     if(item != null){
       dispatch(setUserDetails(JSON.parse(item)));
-      navigation.navigate("HomePage");
+      navigation.navigate("TabNavigator");
       console.log(userDetails)
     }
   }

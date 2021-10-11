@@ -27,7 +27,7 @@ import {
     
   } from "../../../reduxStore/actions";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
  
 const Notes = ({navigation}) => {
 
@@ -202,9 +202,10 @@ const Notes = ({navigation}) => {
       </ScrollView>
 
       <TouchableOpacity onPress={handleAddNote} style={styles.addBox}>
-            <Text style={styles.icon}>
+            {/* <Text style={styles.icon}>
                 add
-            </Text>
+            </Text> */}
+            <FontAwesome5 name={'plus'} size={20} color={'white'}/>
       </TouchableOpacity>
 
     </View>

@@ -91,13 +91,13 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   churchName: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
     color: "white",
   },
   churchSlogan: {
-    fontSize: 22,
+    fontSize: 19,
     fontWeight: "bold",
     textAlign: "center",
     color: "white",

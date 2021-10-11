@@ -34,7 +34,7 @@ const ReadPage = () => {
 
   const { currentBook, currentChapter, currentVerse, currentScripture } =
     useSelector((state) => state.useTheReducer);
-  // console.log(currentChapter);
+  console.log("currentScripture", currentScripture);
 
   return (
     <View style={styles.body}>

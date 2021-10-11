@@ -17,7 +17,7 @@ import {
 import Bible from "./Nested/Bible";
 import ReadPage from '../ReadBiblePage/ReadPage'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 // const Stack = createNativeStackNavigator();
 
@@ -25,38 +25,48 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Menus = ({navigation}) => {
 
     return (
+      
 
         <ScrollView>
         <View style={styles.bodyMenus}>
+          
             <TouchableOpacity onPress={() => navigation.push("About")} style={styles.menu}>
-                <Text style={styles.content}>About</Text>
+            <FontAwesome5 name={'church'} size={18} color={'white'}/> 
+            <Text style={styles.content}>About</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menu}>
+            <FontAwesome5 name={'map-marker-alt'} size={18} color={'white'}/>
                 <Text style={styles.content}>Location</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menu}>
+            <FontAwesome5 name={'book-reader'} size={18} color={'white'}/>
                 <Text style={styles.content}>Word Bliss</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.push("Notes")} style={styles.menu}>
+            <FontAwesome5 name={'sticky-note'} size={18} color={'white'}/>
                 <Text style={styles.content}>Notes</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.push("Bible")}  style={styles.menu}>
+            <FontAwesome5 name={'bible'} size={18} color={'white'}/>
                 <Text style={styles.content}>Bible</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menu}>
+            <FontAwesome5 name={'play'} size={18} color={'white'}/>
                 <Text style={styles.content}>Sermon/Word of God</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.push("Event")}  style={styles.menu}>
+            <FontAwesome5 name={'calendar-check'} size={18} color={'white'}/>
                 <Text style={styles.content}>Events</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.push("Profile")} style={styles.menu}>
+            <FontAwesome5 name={'user-cog'} size={18} color={'white'}/>
                 <Text style={styles.content}>Settings/Profile</Text>
             </TouchableOpacity>
 
@@ -77,6 +87,7 @@ const Menus = ({navigation}) => {
                     ]
                   );
             }} style={styles.menu}>
+              <FontAwesome5 name={'sign-out-alt'} size={18} color={'white'}/>          
                 <Text style={styles.content}>Logout</Text>
             </TouchableOpacity>
         </View>
@@ -105,12 +116,14 @@ const styles = StyleSheet.create({
         borderBottomColor: '#c9c3c1',
         paddingLeft: '5%',
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'row'
       },
       content: {
         fontSize: 21,
-        color: 'whitesmoke'
+        color: 'whitesmoke',
+        marginLeft: '5%'
 
       }
 })
