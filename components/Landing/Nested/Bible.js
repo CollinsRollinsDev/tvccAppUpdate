@@ -86,6 +86,7 @@ const Bible = ({ navigation }) => {
       return
     }
     
+    
   };
 
   useEffect(() => {
