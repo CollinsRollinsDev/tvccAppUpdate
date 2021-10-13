@@ -56,9 +56,15 @@ const Profile_Settings = () => {
       : setEditableText("Edit Profile");
     editable ? setEditable(false) : setEditable(true);
   };
-
+  const check = userDetails.userDepartment.filter(data => data.deptName === requestingDept)
   const handleSaving = async () => {
-    !showPasswordInput
+    if(check.length >= 1){
+      Alert.alert(`Not sent`, `You already belong to this group....`, [
+        { text: "OK", onPress: () => console.log("not sent due to user error") },
+      ]);
+    } else{
+      // proceed with updating
+      !showPasswordInput
       ? setShowPasswordInput(true)
       : setShowPasswordInput(false);
     if (showPasswordInput && password) {
@@ -71,6 +77,7 @@ const Profile_Settings = () => {
           emailAddress: email,
           phoneNumber: phoneNumber,
           password: password,
+          requestingDept: requestingDept == '' ? null : requestingDept
         }),
         headers: {
           "Content-Type": "application/json",
@@ -92,9 +99,12 @@ const Profile_Settings = () => {
         { text: "OK", onPress: () => console.log("done") },
       ]);
     }
+    }
+
+    
   };
 
-  const currentDepartments = userDetails.userDepartment.map((dept, index) => {
+  const currentDepartments = userDetails.userDepartment ? userDetails.userDepartment.map((dept, index) => {
     return (
       <View key={index} style={styles.depts}>
         <Text style={styles.deptText}>Dept name: {dept.deptName === "media_department" ? 'Media Department' : dept.deptName === "choir_department" ? 'Choir Departmnt' : dept.deptName === "ministers_department" ? 'Ministers Department' : dept.deptName === "ushering_department" ? 'Ushering Department' : null}</Text>
@@ -102,7 +112,7 @@ const Profile_Settings = () => {
         <Text style={styles.deptText}>Position: {dept.position}</Text>
       </View>
     );
-  });
+  }): null;
 
   return (
     <View style={styles.body}>
